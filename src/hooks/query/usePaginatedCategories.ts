@@ -1,3 +1,4 @@
+import { QUERY_KEY } from '@/constants/constant'
 import { client } from '@/utils/supabase'
 import { useSuspenseQuery } from '@tanstack/react-query'
 
@@ -19,7 +20,7 @@ export const getPaginatedCategories = async (
 
 export const usePaginatedCategories = (start: number, end: number) => {
   return useSuspenseQuery({
-    queryKey: ['CATEGORY', start],
+    queryKey: [QUERY_KEY.CATEGORY, start],
     queryFn: () => getPaginatedCategories(start, end),
   })
 }
