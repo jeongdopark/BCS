@@ -1,5 +1,5 @@
 'use client'
-import { useQuery } from '@tanstack/react-query'
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { client } from '@/utils/supabase'
 import { ICategory } from '@/types/category'
 
@@ -15,7 +15,7 @@ export const getCategories = async (): Promise<ICategory[]> => {
 }
 
 const useCategoriesQuery = () => {
-  return useQuery({ queryKey: ['CATEGORY'], queryFn: getCategories })
+  return useSuspenseQuery({ queryKey: ['CATEGORY'], queryFn: getCategories })
 }
 
 export default useCategoriesQuery
