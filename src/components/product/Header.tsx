@@ -2,6 +2,7 @@
 import { Button } from '../ui/button'
 import Modal from '../common/Modal'
 import { useState } from 'react'
+import ProductForm from './ProductForm'
 
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -12,9 +13,9 @@ const Header = () => {
       <Modal
         open={isModalOpen}
         setOpen={setIsModalOpen}
-        title="카테고리 추가"
+        title="상품 추가"
         trigger={<Button size="lg">추가</Button>}
-        InnerComponent={<div>Create Product</div>}
+        InnerComponent={<ProductForm />}
       />
     </header>
   )
