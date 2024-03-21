@@ -1,9 +1,7 @@
 import Header from '@/components/product/Header'
 import ProductTable from '@/components/product/ProductTable'
 import { PAGINATION, QUERY_KEY } from '@/constants/constant'
-import { getPaginatedCategories } from '@/hooks/query/usePaginatedCategories'
 import { getPaginatedProducts } from '@/hooks/query/usePaginatedProducts'
-import { client } from '@/utils/supabase'
 
 import { QueryClient, dehydrate } from '@tanstack/query-core'
 import { HydrationBoundary } from '@tanstack/react-query'

@@ -6,9 +6,9 @@ export default async function Category() {
   let { data: categories, error } = await client.from('categories').select('*')
 
   return (
-    <aside className="w-[200px] min-h-lvh bg-gray-500 flex justify-center p-3">
+    <aside className="w-[200px] min-h-lvh flex justify-center p-3 border-r-[1px]">
       <ul className="flex flex-col gap-3 mt-5">
-        <Button>전체</Button>
+        <strong>카테고리</strong>
         {categories?.map((category: ICategory) => {
           return <Button key={category.id}>{category.name}</Button>
         })}
