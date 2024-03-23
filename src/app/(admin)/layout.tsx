@@ -2,19 +2,19 @@ import Link from 'next/link'
 
 const MENU = [
   {
-    url: '/companies/1/calendar',
+    url: '/calendar',
     name: '매출달력',
   },
   {
-    url: '/companies/1/dashboard',
+    url: '/dashboard',
     name: '대시보드',
   },
   {
-    url: '/companies/1/product?page=0&category=all',
+    url: '/product?page=0&category=all',
     name: '상품관리',
   },
   {
-    url: '/companies/1/category',
+    url: '/category',
     name: '카테고리',
   },
 ]

@@ -15,6 +15,9 @@ import {
 } from '@/components/ui/form'
 import { signUpNewUser } from '@/actions/auth'
 import Link from 'next/link'
+import Toast from '@/components/common/Toast'
+import { useRouter } from 'next/navigation'
+
 const formSchema = z
   .object({
     email: z
@@ -34,6 +37,7 @@ const formSchema = z
   })
 
 export default function Signup() {
+  const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,8 +48,26 @@ export default function Signup() {
   })
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    signUpNewUser({ email: values.email, password: values.password })
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const { data, error } = await signUpNewUser({
+      email: values.email,
+      password: values.password,
+    })
+
+    if (error) {
+      Toast({
+        title: '회원가입 실패',
+        description: error,
+        mode: 'fail',
+      })
+    } else {
+      Toast({
+        title: '회원가입',
+        description: '회뤈가입 완료 !',
+        mode: 'success',
+      })
+      router.push('/signin')
+    }
   }
   return (
     <div className="w-[60%] p-2">

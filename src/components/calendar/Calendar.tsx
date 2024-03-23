@@ -14,7 +14,7 @@ import {
   getMonth,
   isSunday,
 } from 'date-fns'
-import { History } from '@/app/company/[id]/(admin)/calendar/page'
+import { History } from '@/app/(admin)/calendar/page'
 import TotalRevenue from './TotalRevenue'
 import Header from './Header'
 import { Button } from '@/components/ui/button'
@@ -96,8 +96,11 @@ const Calendar = () => {
                   <div className="flex w-full h-full">
                     <div key={`week${i}`} className="flex w-full">
                       {week.map((v, j) => {
-                        const isCurrentMonth = getMonth(v) === getMonth(currentDate)
-                        const isToday = format(v, 'yyyyMMdd') === format(new Date(), 'yyyyMMdd')
+                        const isCurrentMonth =
+                          getMonth(v) === getMonth(currentDate)
+                        const isToday =
+                          format(v, 'yyyyMMdd') ===
+                          format(new Date(), 'yyyyMMdd')
                         let DAY_REVENUE = null
 
                         return (

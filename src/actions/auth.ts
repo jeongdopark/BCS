@@ -12,6 +12,7 @@ export const signInWithKakao = async () => {
   const { data, error } = await client.auth.signInWithOAuth({
     provider: 'kakao',
   })
+  console.log(data)
 
   if (error) {
     throw console.error(error)
@@ -29,11 +30,7 @@ export const signUpNewUser = async ({ email, password }: IArg) => {
     },
   })
 
-  if (error) {
-    throw console.error(error)
-  } else {
-    redirect('/company/1/store')
-  }
+  return { data, error: error?.message }
 }
 
 export const signin = async ({ email, password }: IArg) => {
@@ -41,13 +38,7 @@ export const signin = async ({ email, password }: IArg) => {
     email,
     password,
   })
+  console.log(data)
 
-  if (error) {
-    console.log('비밀번호가 잘못됨')
-    throw console.error(error)
-  } else {
-    console.log('hello')
-
-    redirect('/company/1/store')
-  }
+  return { data, error: error?.message }
 }

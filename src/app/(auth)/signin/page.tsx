@@ -15,6 +15,8 @@ import {
 import { GoChevronRight } from 'react-icons/go'
 import Link from 'next/link'
 import { signInWithKakao, signin } from '@/actions/auth'
+import Toast from '@/components/common/Toast'
+import { useRouter } from 'next/navigation'
 const formSchema = z.object({
   email: z
     .string()
@@ -26,6 +28,7 @@ const formSchema = z.object({
 })
 
 export default function Signin() {
+  const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -35,8 +38,27 @@ export default function Signin() {
   })
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    signin({ email: values.email, password: values.password })
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    const { data, error } = await signin({
+      email: values.email,
+      password: values.password,
+    })
+    if (error) {
+      Toast({
+        title: '로그인 실패',
+        description: error,
+        mode: 'fail',
+      })
+      throw console.error(error)
+    } else {
+      Toast({
+        title: '로그인 완료',
+        description: '로그인 완료',
+        mode: 'success',
+      })
+
+      router.push(`/company/${data.user!.id}/store-management`)
+    }
   }
   return (
     <div className="w-[60%] p-2">
