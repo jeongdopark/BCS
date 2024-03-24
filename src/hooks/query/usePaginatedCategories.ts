@@ -10,7 +10,6 @@ export const getPaginatedCategories = async (
     .from('categories')
     .select('id, name', { count: 'exact' })
     .range(start, end)
-  console.log(data)
 
   if (error) {
     throw console.error('Error fetching categories:', error)

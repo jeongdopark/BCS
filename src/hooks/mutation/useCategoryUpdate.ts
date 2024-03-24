@@ -7,7 +7,6 @@ const useCategoryUpdate = () => {
     mutationFn: ({ name, id }: { name: string; id: number }) =>
       updateCategory({ name, id }),
     onSuccess: () => {
-      console.log('mutation')
       return queryClient.invalidateQueries({ queryKey: ['CATEGORY'] })
     },
   })

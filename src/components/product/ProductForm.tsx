@@ -57,14 +57,10 @@ const ProductForm = () => {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(image)
-
     const createProduct = async () => {
       const { data, error } = await client.storage
         .from('test')
         .upload(`product_${Date.now()}`, image!)
-      console.log(data)
-      console.log(error)
     }
     createProduct()
   }

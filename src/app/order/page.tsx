@@ -4,18 +4,13 @@ import OrderList from '@/components/order/OrderList'
 export default async function Order({
   searchParams,
 }: {
-  searchParams: { page: string; category: string }
+  searchParams: { category: string }
 }) {
-  console.log(searchParams.category)
-
   return (
     <div className="w-full flex justify-center ">
       <div className="flex flex-col gap-8 items-center w-full p-3  overflow-scroll mt-5 h-lvh">
         <RecommendList />
-        <ProductList
-          category={searchParams.category}
-          page={Number(searchParams.page)}
-        />
+        <ProductList category={searchParams.category} />
       </div>
       <div className="w-[40%]">
         <OrderList />

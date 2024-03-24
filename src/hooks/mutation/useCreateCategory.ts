@@ -6,7 +6,6 @@ const useCreateCategory = () => {
   return useMutation({
     mutationFn: (name: string) => createCategory(name),
     onSuccess: () => {
-      console.log('mutation')
       return queryClient.invalidateQueries({ queryKey: ['CATEGORY'] })
     },
   })
