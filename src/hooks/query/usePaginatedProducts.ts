@@ -12,14 +12,14 @@ export const getPaginatedProducts = async (
         id: number
         description: string
         image_src: string
-        category: ICategory[]
+        category: ICategory
         price: number
       }[]
     | null
   count: number | null
 }> => {
   let { data, error, count } = await client
-    .from('product')
+    .from('products')
     .select('id, name, description, image_src, price, category(id, name)', {
       count: 'exact',
     })

@@ -57,7 +57,7 @@ export default function Signin() {
         mode: 'success',
       })
 
-      router.push(`/company/${data.user!.id}/store-management`)
+      router.push(`/store-management`)
     }
   }
   return (

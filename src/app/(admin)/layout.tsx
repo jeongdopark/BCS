@@ -10,7 +10,7 @@ const MENU = [
     name: '대시보드',
   },
   {
-    url: '/product?page=0&category=all',
+    url: '/product?page=0&category=coffee',
     name: '상품관리',
   },
   {

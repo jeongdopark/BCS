@@ -7,9 +7,10 @@ export const getPaginatedCategories = async (
   end: number,
 ): Promise<{ data: { name: string; id: number }[]; count: number | null }> => {
   const { data, error, count } = await client
-    .from('category')
+    .from('categories')
     .select('id, name', { count: 'exact' })
     .range(start, end)
+  console.log(data)
 
   if (error) {
     throw console.error('Error fetching categories:', error)
