@@ -12,7 +12,6 @@ export const signInWithKakao = async () => {
   const { data, error } = await client.auth.signInWithOAuth({
     provider: 'kakao',
   })
-  console.log(data)
 
   if (error) {
     throw console.error(error)
@@ -38,7 +37,6 @@ export const signin = async ({ email, password }: IArg) => {
     email,
     password,
   })
-  console.log(data)
 
   return { data, error: error?.message }
 }
