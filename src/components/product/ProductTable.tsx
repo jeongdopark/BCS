@@ -39,7 +39,7 @@ const ProductTable = ({ current_page }: { current_page: number }) => {
         <TableBody>
           {data.data!.map((product) => {
             return (
-              <TableRow>
+              <TableRow key={product.id}>
                 <TableCell className="font-medium">
                   <Image
                     src={product.image_src}

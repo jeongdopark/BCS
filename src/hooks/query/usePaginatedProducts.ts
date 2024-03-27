@@ -20,11 +20,10 @@ export const getPaginatedProducts = async (
 }> => {
   let { data, error, count } = await client
     .from('products')
-    .select('id, name, description, image_src, price, category(id, name)', {
+    .select('*', {
       count: 'exact',
     })
     .range(start, end)
-
   if (error) {
     throw new Error(error.message)
   }

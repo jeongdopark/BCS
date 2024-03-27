@@ -5,7 +5,7 @@ import { IProduct } from '@/types/product'
 const ProductList = async ({ category }: { category: string }) => {
   let { data: products, error } = await client
     .from('products')
-    .select(`*, category!inner(english_name)`)
+    .select(`*, category!inner(*)`)
     .eq('category.english_name', category)
 
   return (
