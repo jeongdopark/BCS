@@ -1,13 +1,11 @@
-import { client } from '@/utils/supabase'
+'use client'
+
 import ProductCard from './ProductCard'
 import { IProduct } from '@/types/product'
+import { useFilterByCategory } from '@/hooks/query/useFilterByCategoryProduct'
 
-const ProductList = async ({ category }: { category: string }) => {
-  let { data: products, error } = await client
-    .from('products')
-    .select(`*, category!inner(*)`)
-    .eq('category.english_name', category)
-
+const ProductList = ({ category }: { category: string }) => {
+  const { data: products } = useFilterByCategory(category)
   return (
     <div className="flex flex-col w-[90%] gap-3">
       <strong>{category}</strong>

@@ -8,15 +8,84 @@ import Image from 'next/image'
 import { useProductQuery } from '@/hooks/query/useProductQuery'
 import TabTypeOption from './TabTypeOption'
 import CheckTypeOption from './CheckTypeOption'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
+import { useOrderStore } from '@/stores/order'
 
 interface IProps {
   id: string
 }
+interface seletedOption {
+  name: string
+  option: string
+  price: number
+}
+
 const ProductModal = ({ id }: IProps) => {
   const router = useRouter()
   const { data } = useProductQuery(id)
+  const PRODUCT_PRICE = useRef(data[0].price)
+  const addOrder = useOrderStore((state) => state.addOrder)
+  const addAmount = useOrderStore((state) => state.addAmount)
+  const UID = Math.random() * 1000
   const [count, setCount] = useState(1)
+  const [price, setPrice] = useState(data[0].price)
+  const [selectedOptions, setSelectedOptions] = useState<seletedOption[]>([])
+
+  const isExistOption = (seletedOptions: seletedOption[], name: string) => {
+    for (let i = 0; i < seletedOptions.length; i++) {
+      if (seletedOptions[i].name === name) return true
+    }
+    return false
+  }
+
+  const handleTabOptionUpdate = ({
+    option,
+    price,
+    name,
+  }: {
+    option: string
+    name: string
+    price: number
+  }) => {
+    console.log(selectedOptions, 'select')
+    if (selectedOptions.length > 0) {
+      // 이미 옵션 선택을 했을 경우
+      if (isExistOption(selectedOptions, name)) {
+        setSelectedOptions(
+          selectedOptions.map((_option) =>
+            name === _option.name ? { option, price, name } : _option,
+          ),
+        )
+      } else {
+        setSelectedOptions([...selectedOptions, { option, price, name }])
+      }
+    } else {
+      setSelectedOptions([...selectedOptions, { option, price, name }])
+    }
+  }
+
+  const handleCheckOptionUpdate = ({
+    option,
+    price,
+    name,
+  }: {
+    option: string
+    name: string
+    price: number
+  }) => {
+    if (selectedOptions.length > 0) {
+      if (isExistOption(selectedOptions, name)) {
+        setSelectedOptions((options) =>
+          options.filter((option) => option.name !== name),
+        )
+      } else {
+        setSelectedOptions([...selectedOptions, { name, price, option }])
+      }
+    } else {
+      setSelectedOptions([...selectedOptions, { name, price, option }])
+    }
+  }
+
   return (
     <Dialog open>
       <DialogContent className="sm:max-w-md">
@@ -26,19 +95,26 @@ const ProductModal = ({ id }: IProps) => {
           </div>
           <div className="flex flex-col gap-1">
             <strong>{data[0].name}</strong>
-            <strong>{data[0].price.toLocaleString()}원</strong>
+            <strong>{price.toLocaleString()}원</strong>
             <div className="flex items-center gap-3">
               <Button
                 size="sm"
-                onClick={() => setCount((prev) => prev - 1)}
+                onClick={() => {
+                  setCount((prev) => prev - 1)
+                  setPrice(PRODUCT_PRICE.current * (count - 1))
+                }}
                 className="rounded-lg "
+                disabled={count <= 1}
               >
                 <FiMinus />
               </Button>
               <span>{count}</span>
               <Button
                 size="sm"
-                onClick={() => setCount((prev) => prev + 1)}
+                onClick={() => {
+                  setCount((prev) => prev + 1)
+                  setPrice(PRODUCT_PRICE.current * (count + 1))
+                }}
                 className="rounded-lg"
               >
                 <FiPlus />
@@ -50,12 +126,18 @@ const ProductModal = ({ id }: IProps) => {
         {data[0].options &&
           data[0].options.map((option) => {
             return (
-              <div>
+              <div key={option.name}>
                 <strong>{option.name}</strong>
                 {option.type === 'select' ? (
-                  <TabTypeOption option={option} />
+                  <TabTypeOption
+                    option={option}
+                    handleOptionChange={handleTabOptionUpdate}
+                  />
                 ) : (
-                  <CheckTypeOption option={option} />
+                  <CheckTypeOption
+                    option={option}
+                    handleOptionChange={handleCheckOptionUpdate}
+                  />
                 )}
               </div>
             )
@@ -65,6 +147,15 @@ const ProductModal = ({ id }: IProps) => {
             <Button
               className="flex-1"
               onClick={() => {
+                addOrder({
+                  price,
+                  count,
+                  product_id: data[0].id,
+                  product_name: data[0].name,
+                  uid: UID,
+                  options: selectedOptions,
+                })
+                addAmount(price)
                 router.back()
               }}
             >

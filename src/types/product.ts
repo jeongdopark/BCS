@@ -12,7 +12,10 @@ export interface OptionSelectType {
 export interface OptionBooleanType {
   name: string
   type: 'boolean'
-  price: number
+  options: {
+    name: string
+    price: number
+  }[]
 }
 
 export interface IProduct {
