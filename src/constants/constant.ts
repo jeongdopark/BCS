@@ -5,6 +5,12 @@ export const PAGINATION = {
   PRODUCT: 4,
 }
 
+export const ORDER_STATUS = {
+  RECEIVE: 'receive',
+  COMPLETE: 'complete',
+  CANCEL: 'cancel',
+}
+
 export const QUERY_KEY = {
   CATEGORY: 'CATEGORY',
   PRODUCT: 'PRODUCT',
