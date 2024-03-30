@@ -1,3 +1,4 @@
+'use client'
 import {
   Table,
   TableBody,
@@ -9,8 +10,10 @@ import {
 } from '@/components/ui/table'
 import { Button } from '../ui/button'
 import { IoSettingsSharp } from 'react-icons/io5'
+import { useRouter } from 'next/navigation'
 
 const StoreTable = () => {
+  const router = useRouter()
   return (
     <Table>
       <TableCaption>등록된 매장이 없습니다.</TableCaption>
@@ -27,8 +30,12 @@ const StoreTable = () => {
           <TableCell>Credit Card</TableCell>
           <TableCell className="text-right">
             <div className="flex justify-end gap-2">
-              <Button size="lg">주문 페이지</Button>
-              <Button size="lg">관리자 페이지</Button>
+              <Button size="lg" onClick={() => router.push('/order')}>
+                주문 페이지
+              </Button>
+              <Button size="lg" onClick={() => router.push('/product?page=1')}>
+                관리자 페이지
+              </Button>
               <Button size="lg">
                 <IoSettingsSharp />
               </Button>

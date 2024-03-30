@@ -17,8 +17,8 @@ export default async function Product({
     queryKey: [QUERY_KEY.PRODUCT],
     queryFn: () =>
       getPaginatedProducts(
-        (Number(searchParams.page) - 1) * PAGINATION.CATEGORY,
-        Number(searchParams.page) * PAGINATION.CATEGORY - 1,
+        (Number(searchParams.page) - 1) * PAGINATION.PRODUCT,
+        Number(searchParams.page) * PAGINATION.PRODUCT - 1,
       ),
   })
 

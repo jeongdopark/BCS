@@ -8,17 +8,24 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
+import { BsThreeDots } from 'react-icons/bs'
 
 import { usePaginatedProducts } from '@/hooks/query/usePaginatedProducts'
 import Image from 'next/image'
 import CustomPagination from '../common/Pagination'
 import { PAGINATION } from '@/constants/constant'
 import { Button } from '../ui/button'
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+} from '../ui/dropdown-menu'
 
 const ProductTable = ({ current_page }: { current_page: number }) => {
   const { data } = usePaginatedProducts(
-    (current_page - 1) * 5,
-    current_page * 5 - 1,
+    (current_page - 1) * PAGINATION.PRODUCT,
+    current_page * PAGINATION.PRODUCT - 1,
   )
 
   return (
@@ -58,10 +65,17 @@ const ProductTable = ({ current_page }: { current_page: number }) => {
                   {product.description}
                 </TableCell>
                 <TableCell className="text-right">
-                  <div className="flex gap-2 justify-end">
-                    <Button size="lg">수정</Button>
-                    <Button size="lg">삭제</Button>
-                  </div>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button variant="ghost">
+                        <BsThreeDots />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                      <DropdownMenuItem>수정</DropdownMenuItem>
+                      <DropdownMenuItem>삭제</DropdownMenuItem>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
                 </TableCell>
               </TableRow>
             )
