@@ -3,6 +3,7 @@ import { create } from 'zustand'
 export interface IOrder {
   count: number
   price: number
+  img_url: string
   product_name: string
   product_id: string
   options?: {
@@ -16,6 +17,7 @@ export interface IOrder {
 interface OrderState {
   orders: IOrder[]
   total_amount: number
+  isTakeout: boolean
 }
 
 interface OrderActions {
@@ -23,13 +25,16 @@ interface OrderActions {
   removeAllOrders: () => void
   addAmount: (amount: number) => void
   removeOrder: (uid: number, price: number) => void
+  takeoutHandler: (boolean:boolean) => void
 }
 
 type OrderStore = OrderState & OrderActions
 
 export const useOrderStore = create<OrderStore>()((set) => ({
+  isTakeout: false,
   total_amount: 0,
   orders: [],
+  takeoutHandler: (boolean) => set((state) => ({ isTakeout: boolean })),
   removeAllOrders: () => set(() => ({ orders: [] })),
   addOrder: (newOrder) =>
     set((state) => ({ orders: [...state.orders, newOrder] })),

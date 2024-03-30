@@ -1,14 +1,11 @@
 'use client'
 
-import { Card } from '../ui/card'
-import { Button } from '../ui/button'
-import { IOrder, useOrderStore } from '@/stores/order'
+import { IOrder } from '@/stores/order'
 import Image from 'next/image'
-import { Badge } from '../ui/badge'
+import { Badge } from '@/components/ui/badge'
+import { Card } from '@/components/ui/card'
 
-const OrderCard = ({ order }: { order: IOrder }) => {
-  const removeOrder = useOrderStore((state) => state.removeOrder)
-
+const BasketCard = ({ order }: { order: IOrder }) => {
   return (
     <Card className="flex p-3 gap-2 flex-col w-full">
       <div className="flex gap-3">
@@ -28,13 +25,8 @@ const OrderCard = ({ order }: { order: IOrder }) => {
           </ul>
         </div>
       </div>
-      <div className="flex flex-col w-full">
-        <Button size="sm" onClick={() => removeOrder(order.uid, order.price)}>
-          취소
-        </Button>
-      </div>
     </Card>
   )
 }
 
-export default OrderCard
+export default BasketCard

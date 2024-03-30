@@ -21,11 +21,11 @@ interface seletedOption {
 }
 
 const ProductModal = ({ id }: IProps) => {
-  const router = useRouter()
-  const { data } = useProductQuery(id)
-  const PRODUCT_PRICE = useRef(data[0].price)
   const addOrder = useOrderStore((state) => state.addOrder)
   const addAmount = useOrderStore((state) => state.addAmount)
+  const { data } = useProductQuery(id)
+  const router = useRouter()
+  const PRODUCT_PRICE = useRef(data[0].price)
   const UID = Math.random() * 1000
   const [count, setCount] = useState(1)
   const [price, setPrice] = useState(data[0].price)
@@ -147,6 +147,16 @@ const ProductModal = ({ id }: IProps) => {
             <Button
               className="flex-1"
               onClick={() => {
+                router.back()
+              }}
+            >
+              닫기
+            </Button>
+          </DialogTrigger>
+          <DialogTrigger asChild>
+            <Button
+              className="flex-1"
+              onClick={() => {
                 addOrder({
                   price,
                   count,
@@ -154,22 +164,13 @@ const ProductModal = ({ id }: IProps) => {
                   product_name: data[0].name,
                   uid: UID,
                   options: selectedOptions,
+                  img_url: data[0].image_src,
                 })
                 addAmount(price)
                 router.back()
               }}
             >
               선택
-            </Button>
-          </DialogTrigger>
-          <DialogTrigger asChild>
-            <Button
-              className="flex-1"
-              onClick={() => {
-                router.back()
-              }}
-            >
-              닫기
             </Button>
           </DialogTrigger>
         </div>
