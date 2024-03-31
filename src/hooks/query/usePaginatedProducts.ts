@@ -20,7 +20,7 @@ export const getPaginatedProducts = async (
 }> => {
   let { data, error, count } = await client
     .from('products')
-    .select('*', {
+    .select('*, category(name)', {
       count: 'exact',
     })
     .range(start, end)
