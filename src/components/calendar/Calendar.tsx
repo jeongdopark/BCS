@@ -14,7 +14,7 @@ import {
   getMonth,
   isSunday,
 } from 'date-fns'
-import { History } from '@/app/(admin)/calendar/page'
+import { History } from '@/app/store/[id]/(admin)/calendar/page'
 import TotalRevenue from './TotalRevenue'
 import Header from './Header'
 import { Button } from '@/components/ui/button'

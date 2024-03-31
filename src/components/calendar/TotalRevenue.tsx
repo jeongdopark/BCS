@@ -1,4 +1,4 @@
-import { History } from '@/app/(admin)/calendar/page'
+import { History } from '@/app/store/[id]/(admin)/calendar/page'
 
 const TotalRevenue = () => {
   let TOTAL_REVENUE = 0
