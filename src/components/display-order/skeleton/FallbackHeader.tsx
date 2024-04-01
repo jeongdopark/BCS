@@ -2,7 +2,7 @@
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { Button } from '@/components/ui/button'
 import { FaAngleLeft } from 'react-icons/fa6'
-import { ORDER_STATUS } from '@/constants/constants'
+import { ORDER_STATUS } from '@/constants/constant'
 
 const FallbackHeader = () => {
   const TAB_TRIGGER_ELEMS = [

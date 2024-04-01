@@ -28,7 +28,7 @@ export default function DisplayOrderPage({
 
   return (
     <div className="relative h-lvh">
-      <Header orders={orders} param={searchParams.status} />
+      {/* <Header orders={orders} param={searchParams.status} /> */}
       <OrderList
         page={Number(page)}
         status={searchParams.status}
