@@ -2,7 +2,11 @@
 
 import { client } from '@/utils/supabase'
 import { redirect } from 'next/navigation'
-
+import { cookies } from 'next/headers'
+import {
+  createClientComponentClient,
+  createServerActionClient,
+} from '@supabase/auth-helpers-nextjs'
 interface IArg {
   email: string
   password: string
@@ -33,7 +37,8 @@ export const signUpNewUser = async ({ email, password }: IArg) => {
 }
 
 export const signin = async ({ email, password }: IArg) => {
-  let { data, error } = await client.auth.signInWithPassword({
+  const supabase = createServerActionClient({ cookies })
+  let { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   })
