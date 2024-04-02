@@ -24,6 +24,7 @@ import { Input } from '@/components/ui/input'
 import useCategoriesQuery from '@/hooks/query/useCategoriesQuery'
 import { useState } from 'react'
 import { client } from '@/utils/supabase'
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -38,8 +39,9 @@ const formSchema = z.object({
   image: z.any(),
 })
 
-const ProductForm = () => {
-  const { data: categories } = useCategoriesQuery()
+const ProductForm = ({ store_id }: { store_id: string }) => {
+  const supabase = createClientComponentClient()
+  const { data: categories } = useCategoriesQuery(store_id)
   const [preview, setPreview] = useState<string>()
   const [image, setImage] = useState<File>()
   const form = useForm<z.infer<typeof formSchema>>({
@@ -56,11 +58,16 @@ const ProductForm = () => {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(image)
+
     const createProduct = async () => {
-      const { data, error } = await client.storage
-        .from('test')
-        .upload(`product_${Date.now()}`, image!)
+      const { data, error } = await supabase.storage
+        .from('/BCS')
+        .upload('cd6ca774-badc-491e-bedc-54e266da6d08/product09.jpeg', image!)
+
+      console.log(data, error)
     }
+
     createProduct()
   }
   return (

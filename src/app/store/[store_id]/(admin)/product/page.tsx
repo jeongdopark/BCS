@@ -9,7 +9,9 @@ import { Suspense } from 'react'
 
 export default async function Product({
   searchParams,
+  params,
 }: {
+  params: { store_id: string }
   searchParams: { page: string }
 }) {
   const queryClient = new QueryClient()
@@ -27,7 +29,7 @@ export default async function Product({
   return (
     <HydrationBoundary state={dehydratedData}>
       <div className="w-[65%] mt-[60px] flex flex-col gap-5 ">
-        <Header />
+        <Header store_id={params.store_id} />
         <Suspense fallback={<div>Product Loading...</div>}>
           <ProductTable current_page={Number(searchParams.page)} />
         </Suspense>
