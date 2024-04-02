@@ -8,18 +8,22 @@ import {
 } from '@tanstack/react-query'
 import { Suspense } from 'react'
 
-export default async function Category() {
+export default async function Category({
+  params,
+}: {
+  params: { store_id: string }
+}) {
   const queryClient = new QueryClient()
   await queryClient.prefetchQuery({
     queryKey: [QUERY_KEY.CATEGORY],
-    queryFn: getCategories,
+    queryFn: () => getCategories(params.store_id),
   })
 
   const dehydrateData = dehydrate(queryClient)
   return (
     <HydrationBoundary state={dehydrateData}>
       <Suspense fallback={<div>Loading...</div>}>
-        <CategoryList />
+        <CategoryList store_id={params.store_id} />
       </Suspense>
     </HydrationBoundary>
   )

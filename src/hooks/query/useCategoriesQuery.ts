@@ -3,8 +3,11 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { client } from '@/utils/supabase'
 import { ICategory } from '@/types/category'
 
-export const getCategories = async (): Promise<ICategory[]> => {
-  const { data, error } = await client.from('categories').select('id, name')
+export const getCategories = async (store_id: string): Promise<ICategory[]> => {
+  const { data, error } = await client
+    .from('categories')
+    .select('id, name')
+    .eq('store', store_id)
 
   if (error) {
     console.error('Error fetching categories:', error)
@@ -14,8 +17,11 @@ export const getCategories = async (): Promise<ICategory[]> => {
   return data
 }
 
-const useCategoriesQuery = () => {
-  return useSuspenseQuery({ queryKey: ['CATEGORY'], queryFn: getCategories })
+const useCategoriesQuery = (store_id: string) => {
+  return useSuspenseQuery({
+    queryKey: ['CATEGORY'],
+    queryFn: () => getCategories(store_id),
+  })
 }
 
 export default useCategoriesQuery

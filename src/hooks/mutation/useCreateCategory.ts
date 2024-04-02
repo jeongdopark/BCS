@@ -4,7 +4,15 @@ import { useQueryClient, useMutation } from '@tanstack/react-query'
 const useCreateCategory = () => {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationFn: (name: string) => createCategory(name),
+    mutationFn: ({
+      name,
+      english_name,
+      store,
+    }: {
+      name: string
+      english_name: string
+      store: string
+    }) => createCategory({ name, english_name, store }),
     onSuccess: () => {
       return queryClient.invalidateQueries({ queryKey: ['CATEGORY'] })
     },

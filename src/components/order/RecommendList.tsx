@@ -1,5 +1,5 @@
+'use client'
 import ProductCard from './ProductCard'
-import { client } from '@/utils/supabase'
 import { IProduct } from '@/types/product'
 import {
   Carousel,
@@ -8,12 +8,10 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel'
+import { useRecommendProduct } from '@/hooks/query/useRecommendProduct'
 
-const RecommendList = async () => {
-  let { data: products, error } = await client
-    .from('products')
-    .select('*')
-    .eq('tag', 'recommend')
+const RecommendList = async ({ store_id }: { store_id: string }) => {
+  let { data: products, error } = useRecommendProduct(store_id)
 
   return (
     <div className="w-[90%] flex flex-col gap-3">

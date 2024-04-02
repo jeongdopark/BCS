@@ -12,8 +12,8 @@ const CATEGORY = {
   디카페인: 'decaf',
 }
 
-const CategoryList = () => {
-  const { data: categories } = useCategoriesQuery()
+const CategoryList = ({ store_id }: { store_id: string }) => {
+  const { data: categories } = useCategoriesQuery(store_id)
   const router = useRouter()
 
   return (
@@ -26,7 +26,7 @@ const CategoryList = () => {
               key={category.id}
               size="lg"
               onClick={() =>
-                router.push(`/order?category=${CATEGORY[category.name]}`)
+                router.push(`?category=${CATEGORY[category.name]}`)
               }
             >
               {category.name}
