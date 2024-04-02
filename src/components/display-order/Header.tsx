@@ -90,7 +90,6 @@ const Header = ({
   })
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    console.log(data)
     Toast({
       title: 'hello',
       mode: 'success',

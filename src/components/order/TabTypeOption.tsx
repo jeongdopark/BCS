@@ -28,8 +28,6 @@ const TabTypeOption = ({
           <TabsTrigger
             value={JSON.stringify({ name: elem.name, price: elem.price })}
             onClick={() => {
-              console.log('click')
-
               handleOptionChange({
                 name: option.name,
                 option: elem.name,

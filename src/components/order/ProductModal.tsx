@@ -47,7 +47,6 @@ const ProductModal = ({ id }: IProps) => {
     name: string
     price: number
   }) => {
-    console.log(selectedOptions, 'select')
     if (selectedOptions.length > 0) {
       // 이미 옵션 선택을 했을 경우
       if (isExistOption(selectedOptions, name)) {

@@ -21,6 +21,9 @@ const formSchema = z.object({
   category: z.string().min(2, {
     message: '카테고리 입력해 주세요.',
   }),
+  category_english: z.string().min(2, {
+    message: '카테고리 입력해 주세요.',
+  }),
 })
 
 interface IProp {
@@ -44,24 +47,31 @@ const CategoryForm = ({ mode, name, id, setIsModalOpen }: IProp) => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     switch (mode) {
       case 'create':
-        createCategory.mutate(values.category, {
-          onSuccess: () => {
-            console.log('Success')
-            Toast({
-              title: '추가 완료',
-              description: values.category,
-              mode: 'success',
-            })
+        createCategory.mutate(
+          {
+            name: values.category,
+            english_name: values.category_english,
+            store: 'cd6ca774-badc-491e-bedc-54e266da6d08',
           },
-          onError: (err) => {
-            console.log('Fail')
-            Toast({
-              title: '등록 실패',
-              description: err.message,
-              mode: 'fail',
-            })
+          {
+            onSuccess: () => {
+              console.log('Success')
+              Toast({
+                title: '추가 완료',
+                description: values.category,
+                mode: 'success',
+              })
+            },
+            onError: (err) => {
+              console.log('Fail')
+              Toast({
+                title: '등록 실패',
+                description: err.message,
+                mode: 'fail',
+              })
+            },
           },
-        })
+        )
 
       case 'update':
         updateCategory.mutate(
@@ -100,6 +110,22 @@ const CategoryForm = ({ mode, name, id, setIsModalOpen }: IProp) => {
               <FormLabel>카테고리</FormLabel>
               <FormControl>
                 <Input placeholder="카테고리를 입력해 주세요." {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="category_english"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>영문</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="카테고리를 영문으로 입력해 주세요."
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
