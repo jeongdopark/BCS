@@ -17,6 +17,8 @@ import Link from 'next/link'
 import { signInWithKakao, signin } from '@/actions/auth'
 import Toast from '@/components/common/Toast'
 import { useRouter } from 'next/navigation'
+import { useUserStore } from '@/stores/user'
+import useStore from '@/stores/useStore'
 const formSchema = z.object({
   email: z
     .string()
@@ -28,6 +30,7 @@ const formSchema = z.object({
 })
 
 export default function Signin() {
+  const set_user_info = useUserStore((state: any) => state.set_user_info)
   const router = useRouter()
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -43,6 +46,7 @@ export default function Signin() {
       email: values.email,
       password: values.password,
     })
+
     if (error) {
       Toast({
         title: '로그인 실패',
@@ -51,6 +55,8 @@ export default function Signin() {
       })
       throw console.error(error)
     } else {
+      localStorage.setItem('user_id', data.user!.id)
+      set_user_info({ data })
       Toast({
         title: '로그인 완료',
         description: '로그인 완료',
