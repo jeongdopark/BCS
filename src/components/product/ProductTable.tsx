@@ -39,7 +39,6 @@ const ProductTable = ({ current_page }: { current_page: number }) => {
             <TableHead className="text-center">카테고리</TableHead>
             <TableHead className="text-center">가격</TableHead>
             <TableHead className="text-center">설명</TableHead>
-
             <TableHead className="text-right"></TableHead>
           </TableRow>
         </TableHeader>

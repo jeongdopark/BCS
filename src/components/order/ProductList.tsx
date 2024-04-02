@@ -17,7 +17,13 @@ const ProductList = ({
       <strong>{category}</strong>
       <div className="grid grid-cols-2 gap-10 ">
         {products?.map((product: IProduct) => {
-          return <ProductCard product={product} key={product.name} />
+          return (
+            <ProductCard
+              product={product}
+              key={product.name}
+              store_id={store_id}
+            />
+          )
         })}
       </div>
     </div>

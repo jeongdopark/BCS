@@ -7,7 +7,13 @@ import { Button } from '../ui/button'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 
-const ProductCard = ({ product }: { product: IProduct }) => {
+const ProductCard = ({
+  product,
+  store_id,
+}: {
+  product: IProduct
+  store_id: string
+}) => {
   const router = useRouter()
   return (
     <Card className="flex p-3 gap-2 ">
@@ -22,7 +28,9 @@ const ProductCard = ({ product }: { product: IProduct }) => {
         <span className="text-sm">{product.price}</span>
         <Button
           size="sm"
-          onClick={() => router.push(`/order/product/${product.id}`)}
+          onClick={() =>
+            router.push(`/store/${store_id}/order/product/${product.id}`)
+          }
         >
           선택
         </Button>
