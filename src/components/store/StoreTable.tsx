@@ -11,12 +11,17 @@ import {
 import { Button } from '../ui/button'
 import { IoSettingsSharp } from 'react-icons/io5'
 import { useRouter } from 'next/navigation'
+import useStoreQuery from '@/hooks/query/useStoreQuery'
 
 const StoreTable = () => {
   const router = useRouter()
+  const { data: stores } = useStoreQuery()
+
   return (
     <Table>
-      <TableCaption>등록된 매장이 없습니다.</TableCaption>
+      {stores.length === 0 && (
+        <TableCaption>등록된 매장이 없습니다.</TableCaption>
+      )}
       <TableHeader>
         <TableRow>
           <TableHead>매장명</TableHead>
@@ -25,23 +30,37 @@ const StoreTable = () => {
         </TableRow>
       </TableHeader>
       <TableBody>
-        <TableRow>
-          <TableCell className="font-medium">투썸 플레이스 간석점</TableCell>
-          <TableCell>Credit Card</TableCell>
-          <TableCell className="text-right">
-            <div className="flex justify-end gap-2">
-              <Button size="lg" onClick={() => router.push('/order')}>
-                주문 페이지
-              </Button>
-              <Button size="lg" onClick={() => router.push('/product?page=1')}>
-                관리자 페이지
-              </Button>
-              <Button size="lg">
-                <IoSettingsSharp />
-              </Button>
-            </div>
-          </TableCell>
-        </TableRow>
+        {stores.map((store) => {
+          return (
+            <TableRow>
+              <TableCell className="font-medium">{store.name}</TableCell>
+              <TableCell>Credit Card</TableCell>
+              <TableCell className="text-right">
+                <div className="flex justify-end gap-2">
+                  <Button
+                    size="lg"
+                    onClick={() =>
+                      router.push(`/store/${store.store_id}/order`)
+                    }
+                  >
+                    주문 페이지
+                  </Button>
+                  <Button
+                    size="lg"
+                    onClick={() =>
+                      router.push(`/store/${store.store_id}/product?page=1`)
+                    }
+                  >
+                    관리자 페이지
+                  </Button>
+                  <Button size="lg">
+                    <IoSettingsSharp />
+                  </Button>
+                </div>
+              </TableCell>
+            </TableRow>
+          )
+        })}
       </TableBody>
     </Table>
   )

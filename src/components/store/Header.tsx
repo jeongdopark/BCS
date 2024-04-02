@@ -2,6 +2,7 @@
 import { Button } from '../ui/button'
 import Modal from '../common/Modal'
 import { useState } from 'react'
+import StoreForm from './StoreForm'
 
 const Header = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -14,7 +15,7 @@ const Header = () => {
         setOpen={setIsModalOpen}
         title="매장 생성"
         trigger={<Button size="lg">생성</Button>}
-        InnerComponent={<div>Store 추가</div>}
+        InnerComponent={<StoreForm setIsModalOpen={setIsModalOpen} />}
       />
     </header>
   )

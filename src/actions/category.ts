@@ -1,8 +1,16 @@
 'use server'
 import { client } from '@/utils/supabase'
 
-export const createCategory = async (name: string) => {
-  await client.from('category').insert([{ name }]).select()
+export const createCategory = async ({
+  name,
+  english_name,
+  store,
+}: {
+  name: string
+  english_name: string
+  store: string
+}) => {
+  await client.from('categories').insert({ name, english_name, store }).select()
 }
 
 export const updateCategory = async ({
@@ -12,7 +20,7 @@ export const updateCategory = async ({
   name: string
   id: number
 }) => {
-  await client.from('category').update({ name }).eq('id', id).select()
+  await client.from('categories').update({ name }).eq('id', id).select()
 }
 
 export const deleteCategory = async (id: number) => {

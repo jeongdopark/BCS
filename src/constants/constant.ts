@@ -14,6 +14,7 @@ export const ORDER_STATUS = {
 export const QUERY_KEY = {
   CATEGORY: 'CATEGORY',
   PRODUCT: 'PRODUCT',
+  STORE: 'STORE',
 }
 
 export type Payment = {
