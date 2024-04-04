@@ -14,6 +14,8 @@ const Header = ({
 }: {
   step: 'first' | 'takeout' | 'basket' | 'payment'
 }) => {
+  console.log(step)
+
   return (
     <div className="flex gap-3">
       <Bs1CircleFill />
@@ -26,11 +28,8 @@ const Header = ({
         <Bs3CircleFill />
       )}
       <BsChevronRight />
-      {step === 'basket' || step === 'takeout' || step === 'first' ? (
-        <Bs4Circle />
-      ) : (
-        <Bs4CircleFill />
-      )}
+
+      {step === 'payment' ? <Bs4CircleFill /> : <Bs4Circle />}
     </div>
   )
 }

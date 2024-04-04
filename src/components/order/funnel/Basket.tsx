@@ -33,7 +33,7 @@ const Basket = ({
         <Button
           size="lg"
           className="w-[100px]"
-          onClick={() => setStep('basket')}
+          onClick={() => setStep('payment')}
         >
           다음
         </Button>

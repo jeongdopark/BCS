@@ -45,7 +45,7 @@ export default async function Order({
           </Suspense>
         </div>
         <div className="w-[40%]">
-          <OrderList />
+          <OrderList store_id={params.store_id} />
         </div>
       </div>
     </HydrationBoundary>

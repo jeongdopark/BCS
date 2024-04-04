@@ -14,24 +14,23 @@ const Takeout = ({
 }) => {
   const router = useRouter()
   const takeoutHandler = useOrderStore((state) => state.takeoutHandler)
-  const [isTakeout, setIsTakeout] = useState<boolean>()
+  const _isTakeout = useOrderStore((state) => state.isTakeout)
+
   return (
     <div className="flex flex-col gap-5 items-center justify-between">
       <Header step="takeout" />
       <div className="flex justify-center gap-3">
         <Card
-          className={`p-10 w-[150px] text-center cursor-pointer hover:bg-gray-100 ${isTakeout === false ? 'bg-gray-100' : 'bg-white'}`}
+          className={`p-10 w-[150px] text-center cursor-pointer hover:bg-gray-100 ${_isTakeout === false ? 'bg-gray-100' : 'bg-white'}`}
           onClick={() => {
-            setIsTakeout(false)
             takeoutHandler(false)
           }}
         >
           매장
         </Card>
         <Card
-          className={`p-10 w-[150px] text-center cursor-pointer hover:bg-gray-100 ${isTakeout === true ? 'bg-gray-100' : 'bg-white'}`}
+          className={`p-10 w-[150px] text-center cursor-pointer hover:bg-gray-100 ${_isTakeout === true ? 'bg-gray-100' : 'bg-white'}`}
           onClick={() => {
-            setIsTakeout(true)
             takeoutHandler(true)
           }}
         >

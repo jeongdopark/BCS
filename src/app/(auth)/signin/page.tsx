@@ -18,7 +18,6 @@ import { signInWithKakao, signin } from '@/actions/auth'
 import Toast from '@/components/common/Toast'
 import { useRouter } from 'next/navigation'
 import { useUserStore } from '@/stores/user'
-import useStore from '@/stores/useStore'
 const formSchema = z.object({
   email: z
     .string()
