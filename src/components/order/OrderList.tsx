@@ -27,7 +27,7 @@ const OrderList = ({ store_id }: { store_id: string }) => {
         )}
       </section>
       <div className=" flex flex-col gap-5 p-5 border-t-[1px]">
-        <span>주문 금액 : {TOTAL_AMOUNT}원</span>
+        <span>주문 금액 : {TOTAL_AMOUNT.toLocaleString()}원</span>
         <div className="flex gap-3 w-full justify-center">
           <Button className="flex-1" onClick={() => init_store()}>
             전체 삭제

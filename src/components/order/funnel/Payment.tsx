@@ -73,7 +73,7 @@ const Payment = ({
         customerName: '김토스',
         customerEmail: 'customer123@gmail.com',
         customerMobilePhone: '01012341234',
-        successUrl: `${window.location.origin}/store/cd6ca774-badc-491e-bedc-54e266da6d08/order/success`,
+        successUrl: `${window.location.origin}/store/cd6ca774-badc-491e-bedc-54e266da6d08/payment-success`,
         failUrl: `${window.location.origin}/fail`,
       })
     } catch (error) {
