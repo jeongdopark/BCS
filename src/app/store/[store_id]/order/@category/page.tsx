@@ -1,3 +1,4 @@
+import CategoryFallback from '@/components/fallback/CategoryFallback'
 import CategoryList from '@/components/order/CategoryList'
 import { QUERY_KEY } from '@/constants/constant'
 import { getCategories } from '@/hooks/query/useCategoriesQuery'
@@ -22,7 +23,7 @@ export default async function Category({
   const dehydrateData = dehydrate(queryClient)
   return (
     <HydrationBoundary state={dehydrateData}>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<CategoryFallback />}>
         <CategoryList store_id={params.store_id} />
       </Suspense>
     </HydrationBoundary>

@@ -1,3 +1,4 @@
+import StoreManagementFallback from '@/components/fallback/StoreManagementFallback'
 import Header from '@/components/store/Header'
 import StoreTable from '@/components/store/StoreTable'
 import { getStores } from '@/hooks/query/useStoreQuery'
@@ -5,7 +6,6 @@ import {
   HydrationBoundary,
   QueryClient,
   dehydrate,
-  useQueryClient,
 } from '@tanstack/react-query'
 import { Suspense } from 'react'
 
@@ -22,7 +22,7 @@ export default async function StoreManagement() {
       <div className="w-[65%] mt-[60px] flex flex-col gap-5 ">
         <Header />
         <HydrationBoundary state={dehydrateData}>
-          <Suspense fallback={<div>loading..</div>}>
+          <Suspense fallback={<StoreManagementFallback />}>
             <StoreTable />
           </Suspense>
         </HydrationBoundary>

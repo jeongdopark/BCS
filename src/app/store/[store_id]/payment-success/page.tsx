@@ -5,12 +5,33 @@ import { CardContent, CardFooter, Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { IOrder, useOrderStore } from '@/stores/order'
 import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+import { client } from '@/utils/supabase'
 
 export default function Page({ params }: { params: { store_id: string } }) {
   const router = useRouter()
   const orders = useOrderStore((state: any) => state.orders)
   const total_amount = useOrderStore((state: any) => state.total_amount)
   const init_store = useOrderStore((state: any) => state.initStore)
+
+  useEffect(() => {
+    if (orders.length > 0 && total_amount) {
+      const create_order_history = async () => {
+        const { data, error } = await client
+          .from('order_history')
+          .insert([
+            { store_id: params.store_id, orders: orders, price: total_amount },
+          ])
+          .select()
+      }
+      create_order_history()
+      // setTimeout(() => {
+      //   init_store()
+      //   router.push(`/store/${params.store_id}/order`)
+      // }, 3000)
+    }
+  }, [orders])
+
   if (orders.length === 0) return <div>Loading...</div>
 
   return (

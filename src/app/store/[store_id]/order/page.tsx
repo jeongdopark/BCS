@@ -10,6 +10,8 @@ import { QUERY_KEY } from '@/constants/constant'
 import { getFilterByCategory } from '@/hooks/query/useFilterByCategoryProduct'
 import { getRecommendProduct } from '@/hooks/query/useRecommendProduct'
 import { Suspense } from 'react'
+import RecommendFallback from '@/components/fallback/RecommendFallback'
+import ProductListFallback from '@/components/fallback/ProductListFallback'
 export default async function Order({
   searchParams,
   params,
@@ -34,10 +36,10 @@ export default async function Order({
     <HydrationBoundary state={dehydrateData}>
       <div className="w-full flex justify-center ">
         <div className="flex flex-col gap-8 items-center w-full p-3  overflow-scroll mt-5 h-lvh">
-          <Suspense fallback={<div>Recommend...</div>}>
+          <Suspense fallback={<RecommendFallback />}>
             <RecommendList store_id={params.store_id} />
           </Suspense>
-          <Suspense fallback={<div>Product List...</div>}>
+          <Suspense fallback={<ProductListFallback />}>
             <ProductList
               category={searchParams.category}
               store_id={params.store_id}

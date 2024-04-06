@@ -21,8 +21,8 @@ interface seletedOption {
 }
 
 const ProductModal = ({ id }: IProps) => {
-  const addOrder = useOrderStore((state) => state.addOrder)
-  const addAmount = useOrderStore((state) => state.addAmount)
+  const addOrder = useOrderStore((state: any) => state.addOrder)
+  const addAmount = useOrderStore((state: any) => state.addAmount)
   const { data } = useProductQuery(id)
   const router = useRouter()
   const PRODUCT_PRICE = useRef(data[0].price)
