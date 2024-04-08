@@ -5,29 +5,21 @@ import { Button } from '../ui/button'
 import { GoClock } from 'react-icons/go'
 import { OrderStatus } from '@/types/display-order'
 import { ORDER_STATUS } from '@/constants/constant'
+import { orderUpdate } from '@/actions/display-order'
 
 interface IProps {
-  order_time: string
   order_status: OrderStatus
-  order_number: number
-  order_id: string
-  complete_time: string
+  order_id: number
 }
 
-const OrderCardHeader = ({
-  order_time,
-  order_number,
-  order_status,
-  order_id,
-  complete_time,
-}: IProps) => {
+const OrderCardHeader = ({ order_status, order_id }: IProps) => {
   const [timeTrigger, setTimeTrigger] = useState(false)
   const [elapsedMinute, setElapsedMinute] = useState(0)
 
   return (
     <CardHeader className="bg-gray-900 text-white p-5 rounded-t-md flex flex-col gap-3  ">
       <div className="flex justify-between">
-        <strong>#{order_number}</strong>
+        <strong>#{order_id}</strong>
         <div className="flex gap-2">
           {order_status === ORDER_STATUS.RECEIVE && <span>time</span>}
           {order_status === ORDER_STATUS.RECEIVE ? (
@@ -44,8 +36,22 @@ const OrderCardHeader = ({
       </div>
       {order_status === ORDER_STATUS.RECEIVE && (
         <div className="flex justify-between gap-2">
-          <Button className="bg-blue-500 hover:bg-blue-300 flex-1">완료</Button>
-          <Button className="bg-red-500 hover:bg-red-300 flex-1">취소</Button>
+          <Button
+            className="bg-blue-500 hover:bg-blue-300 flex-1"
+            onClick={() => {
+              orderUpdate('complete', order_id)
+            }}
+          >
+            완료
+          </Button>
+          <Button
+            className="bg-red-500 hover:bg-red-300 flex-1"
+            onClick={() => {
+              orderUpdate('cancel', order_id)
+            }}
+          >
+            취소
+          </Button>
         </div>
       )}
     </CardHeader>

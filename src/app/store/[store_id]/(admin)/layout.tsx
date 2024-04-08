@@ -1,33 +1,38 @@
 import Link from 'next/link'
-import { CiCalendar } from 'react-icons/ci'
-import { BsBox2 } from 'react-icons/bs'
-import { LuLineChart } from 'react-icons/lu'
 import { BiCategory } from 'react-icons/bi'
 import { Calendar, LineChart, Package2 } from 'lucide-react'
-const MENU = [
-  {
-    url: '/calendar',
-    name: '매출달력',
-    icon: <Calendar className="h-4 w-4" />,
-  },
-  {
-    url: '/dashboard',
-    name: '대시보드',
-    icon: <LineChart className="h-4 w-4" />,
-  },
-  {
-    url: '/product?page=1',
-    name: '상품관리',
-    icon: <Package2 className="h-4 w-4" />,
-  },
-  {
-    url: '/category?page=1',
-    name: '카테고리',
-    icon: <BiCategory />,
-  },
-]
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function Layout({
+  children,
+  params,
+}: {
+  children: React.ReactNode
+  params: { store_id: string }
+}) {
+  console.log(params)
+  const MENU = [
+    {
+      url: `/store/${params.store_id}/calendar`,
+      name: '매출달력',
+      icon: <Calendar className="h-4 w-4" />,
+    },
+    {
+      url: `/store/${params.store_id}/dashboard`,
+      name: '대시보드',
+      icon: <LineChart className="h-4 w-4" />,
+    },
+    {
+      url: `/store/${params.store_id}/product?page=1`,
+      name: '상품관리',
+      icon: <Package2 className="h-4 w-4" />,
+    },
+    {
+      url: `/store/${params.store_id}/category?page=1`,
+      name: '카테고리',
+      icon: <BiCategory />,
+    },
+  ]
+
   return (
     <>
       <div className="flex w-full min-h-lvh">

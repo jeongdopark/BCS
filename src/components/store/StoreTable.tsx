@@ -32,24 +32,24 @@ const StoreTable = () => {
       <TableBody>
         {stores.map((store) => {
           return (
-            <TableRow>
+            <TableRow key={store.store_id}>
               <TableCell className="font-medium">{store.name}</TableCell>
               <TableCell>Credit Card</TableCell>
               <TableCell className="text-right">
                 <div className="flex justify-end gap-2">
                   <Button
                     size="lg"
-                    onClick={() =>
+                    onClick={() => {
                       router.push(`/store/${store.store_id}/order`)
-                    }
+                    }}
                   >
                     주문 페이지
                   </Button>
                   <Button
                     size="lg"
-                    onClick={() =>
+                    onClick={() => {
                       router.push(`/store/${store.store_id}/product?page=1`)
-                    }
+                    }}
                   >
                     관리자 페이지
                   </Button>

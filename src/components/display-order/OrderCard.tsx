@@ -2,42 +2,27 @@
 
 import { Card, CardContent } from '@/components/ui/card'
 import OrderCardHeader from './OrderCardHeader'
-import { OrderStatus } from '@/types/display-order'
+import { IOrder } from '@/hooks/query/useDisplayOrderQuery'
 
-interface IProps {
-  order_time: string
-  order_status: OrderStatus
-  order_number: number
-  order_menus: { menu: string; amount: number }[]
-  order_id: string
-  complete_time: string
-}
-
-const OrderCard = ({
-  order_status,
-  order_number,
-  order_menus,
-  order_time,
-  order_id,
-  complete_time,
-}: IProps) => {
+const OrderCard = ({ order }: { order: IOrder }) => {
   return (
     <Card className="w-[25%]">
-      <OrderCardHeader
-        order_id={order_id}
-        order_time={order_time}
-        order_status={order_status}
-        order_number={order_number}
-        complete_time={complete_time}
-      />
+      <OrderCardHeader order_status={order.status} order_id={order.id} />
       <CardContent>
-        {order_menus.map((e, idx) => (
+        {order.orders.map((e, idx) => (
           <div
             key={idx}
-            className={`p-5 ${idx !== order_menus.length - 1 && 'border-b'} border-gray-200 flex gap-5`}
+            className={`p-5 ${idx !== order.orders.length - 1 && 'border-b'} border-gray-200 flex flex-col`}
           >
-            <strong>{e.amount}</strong>
-            <strong>{e.menu}</strong>
+            <div>
+              <strong>{e.count}</strong>
+              <strong className="ml-3">{e.product_name}</strong>
+            </div>
+            {e.options.map((option) => (
+              <li key={option.name}>
+                {option.name} : {option.option}
+              </li>
+            ))}
           </div>
         ))}
       </CardContent>
