@@ -4,7 +4,7 @@ import { persist, createJSONStorage } from 'zustand/middleware'
 export interface IOrder {
   count: number
   price: number
-  img_url: string
+  img_url?: string
   product_name: string
   product_id: string
   options?: {

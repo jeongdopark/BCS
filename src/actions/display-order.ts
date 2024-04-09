@@ -9,6 +9,4 @@ export const orderUpdate = async (
     .update({ status })
     .eq('id', order_id)
     .select()
-  console.log(data)
-  console.log(error)
 }

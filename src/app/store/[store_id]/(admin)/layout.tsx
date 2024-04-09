@@ -9,11 +9,10 @@ export default function Layout({
   children: React.ReactNode
   params: { store_id: string }
 }) {
-  console.log(params)
   const MENU = [
     {
       url: `/store/${params.store_id}/calendar`,
-      name: '매출달력',
+      name: '매출 달력',
       icon: <Calendar className="h-4 w-4" />,
     },
     {
@@ -23,12 +22,22 @@ export default function Layout({
     },
     {
       url: `/store/${params.store_id}/product?page=1`,
-      name: '상품관리',
+      name: '상품 관리',
       icon: <Package2 className="h-4 w-4" />,
     },
     {
       url: `/store/${params.store_id}/category?page=1`,
       name: '카테고리',
+      icon: <BiCategory />,
+    },
+    {
+      url: `/store/${params.store_id}/display-order`,
+      name: '주문 현황',
+      icon: <BiCategory />,
+    },
+    {
+      url: `/store/${params.store_id}/order`,
+      name: '주문 페이지',
       icon: <BiCategory />,
     },
   ]
@@ -41,7 +50,7 @@ export default function Layout({
             {MENU.map((e) => (
               <li className="mb-3" key={e.url}>
                 <Link href={e.url}>
-                  <div className="flex gap-3 items-center justify-center">
+                  <div className="flex gap-3 items-center justify-start">
                     <span>{e.icon}</span>
                     <span>{e.name}</span>
                   </div>
