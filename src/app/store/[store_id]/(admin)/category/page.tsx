@@ -1,5 +1,6 @@
 import CategoryTable from '@/components/category/CategoryTable'
 import Header from '@/components/category/Header'
+import TableFallback from '@/components/fallback/CategoryFallback'
 import { PAGINATION } from '@/constants/constant'
 import { getPaginatedCategories } from '@/hooks/query/usePaginatedCategories'
 
@@ -28,7 +29,7 @@ export default async function Category({
     <HydrationBoundary state={dehydratedData}>
       <div className="w-[65%] mt-[60px] flex flex-col gap-5 ">
         <Header />
-        <Suspense fallback={<div>Loading...</div>}>
+        <Suspense fallback={<TableFallback />}>
           <CategoryTable current_page={Number(searchParams.page)} />
         </Suspense>
       </div>

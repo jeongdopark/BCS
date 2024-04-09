@@ -1,3 +1,4 @@
+import TableFallback from '@/components/fallback/CategoryFallback'
 import Header from '@/components/product/Header'
 import ProductTable from '@/components/product/ProductTable'
 import { PAGINATION, QUERY_KEY } from '@/constants/constant'
@@ -30,7 +31,7 @@ export default async function Product({
     <HydrationBoundary state={dehydratedData}>
       <div className="w-[65%] mt-[60px] flex flex-col gap-5 ">
         <Header store_id={params.store_id} />
-        <Suspense fallback={<div>Product Loading...</div>}>
+        <Suspense fallback={<TableFallback />}>
           <ProductTable current_page={Number(searchParams.page)} />
         </Suspense>
       </div>
