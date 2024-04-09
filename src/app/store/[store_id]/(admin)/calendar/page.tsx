@@ -15,6 +15,10 @@ export type History = {
   orders: Order[]
 }
 
-export default async function CalendarPage() {
-  return <Calendar />
+export default function CalendarPage({
+  params,
+}: {
+  params: { store_id: string }
+}) {
+  return <Calendar store_id={params.store_id} />
 }

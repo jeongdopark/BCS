@@ -1,19 +1,42 @@
 'use client'
-
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
 import { Skeleton } from '../ui/skeleton'
 
-const CategoryFallback = () => {
+const TableFallback = () => {
   return (
-    <div className="w-[200px] min-h-lvh flex justify-center p-3 border-r-[1px]">
-      <ul className="flex flex-col gap-3 mt-5">
-        <strong>카테고리</strong>
-        <Skeleton className="h-[40px] w-[112px] rounded-xl" />
-        <Skeleton className="h-[40px] w-[112px] rounded-xl" />
-        <Skeleton className="h-[40px] w-[112px] rounded-xl" />
-        <Skeleton className="h-[40px] w-[112px] rounded-xl" />
-      </ul>
-    </div>
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead className="text-right"></TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        <TableRow>
+          <TableCell className="font-medium">
+            <Skeleton className="h-[40px] w-full rounded-xl" />
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell className="font-medium">
+            <Skeleton className="h-[40px] w-full rounded-xl" />
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell className="font-medium">
+            <Skeleton className="h-[40px] w-full rounded-xl" />
+          </TableCell>
+        </TableRow>
+      </TableBody>
+    </Table>
   )
 }
 
-export default CategoryFallback
+export default TableFallback

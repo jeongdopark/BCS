@@ -1,4 +1,5 @@
 'use client'
+import { useHistoryOrder } from '@/hooks/query/useHistoryOrder'
 import { useMemo, useState } from 'react'
 import { SlArrowUp, SlArrowDown } from 'react-icons/sl'
 import {
@@ -18,14 +19,13 @@ import { History } from '@/app/store/[store_id]/(admin)/calendar/page'
 import TotalRevenue from './TotalRevenue'
 import Header from './Header'
 import { Button } from '@/components/ui/button'
-
-import HistoryModal from './HistoryModal'
+import CalendarCell from './CalendarCell'
 
 type MOCK_DATA = {
   [key: string]: History[]
 }
 
-const Calendar = () => {
+const Calendar = ({ store_id }: { store_id: string }) => {
   const [currentDate, setCurrentDate] = useState(new Date())
   const monthStart = startOfMonth(currentDate)
   const monthEnd = endOfMonth(currentDate)
@@ -104,7 +104,8 @@ const Calendar = () => {
                         let DAY_REVENUE = null
 
                         return (
-                          <HistoryModal
+                          <CalendarCell
+                            store_id={store_id}
                             isCurrentMonth={isCurrentMonth}
                             isToday={isToday}
                             DAY_REVENUE={DAY_REVENUE}
