@@ -7,7 +7,6 @@ import {
   Select,
   SelectContent,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
@@ -24,7 +23,7 @@ import { Input } from '@/components/ui/input'
 import useCategoriesQuery from '@/hooks/query/useCategoriesQuery'
 import { useState } from 'react'
 import { client } from '@/utils/supabase'
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs'
+import useCreateProduct from '@/hooks/mutation/useCreateProduct'
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -40,8 +39,8 @@ const formSchema = z.object({
 })
 
 const ProductForm = ({ store_id }: { store_id: string }) => {
-  const supabase = createClientComponentClient()
   const { data: categories } = useCategoriesQuery(store_id)
+  const createProduct = useCreateProduct()
   const [preview, setPreview] = useState<string>()
   const [image, setImage] = useState<File>()
   const form = useForm<z.infer<typeof formSchema>>({
@@ -60,122 +59,136 @@ const ProductForm = ({ store_id }: { store_id: string }) => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(image)
 
-    const createProduct = async () => {
-      const { data, error } = await supabase.storage
-        .from('/BCS')
-        .upload('cd6ca774-badc-491e-bedc-54e266da6d08/product09.jpeg', image!)
+    const createProductHandler = async () => {
+      const { data, error } = await client.storage
+        .from('BCS')
+        .upload(`${store_id}/${image?.name}`, image!)
 
-      console.log(data, error)
+      if (data) {
+        createProduct.mutate({
+          name: values.name,
+          price: values.price,
+          image_src: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${data.fullPath}`,
+          description: values.description,
+          category: values.category,
+          store: store_id,
+          tag: 'recommend',
+        })
+      }
     }
-
-    createProduct()
+    createProductHandler()
   }
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>상품명</FormLabel>
-              <FormControl>
-                <Input placeholder="상품명을 입력해 주세요." {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="category"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>카테고리</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
+    <>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>상품명</FormLabel>
                 <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="카테고리를 선택해 주세요." />
-                  </SelectTrigger>
+                  <Input placeholder="상품명을 입력해 주세요." {...field} />
                 </FormControl>
-                <SelectContent>
-                  {categories.map((category) => {
-                    return (
-                      <SelectItem value={category.name}>
-                        {category.name}
-                      </SelectItem>
-                    )
-                  })}
-                </SelectContent>
-              </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="price"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>가격</FormLabel>
-              <FormControl>
-                <Input placeholder="가격을 입력해 주세요." {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>설명</FormLabel>
-              <FormControl>
-                <Input placeholder="상품 설명을 입력해 주세요." {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="image"
-          render={({ field: { onChange, value, ...rest } }) => (
-            <FormItem>
-              <FormLabel>이미지</FormLabel>
-              <FormControl>
-                <div className="flex justify-between ">
-                  <Input
-                    type="file"
-                    {...rest}
-                    onChange={(event) => {
-                      const displayUrl = getImageData(event.target.files![0])
-                      setPreview(displayUrl)
-                      setImage(event.target.files![0])
-                      onChange(event.target.files![0])
-                    }}
-                    className="w-[50%]"
-                  />
-                  <picture className="w-[150px] h-[150px] relative ">
-                    {preview && (
-                      <Image src={preview} alt="product image" fill />
-                    )}
-                  </picture>
-                </div>
-              </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="category"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>카테고리</FormLabel>
+                <Select
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="카테고리를 선택해 주세요." />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {categories.map((category) => {
+                      return (
+                        <SelectItem value={category.id}>
+                          {category.name}
+                        </SelectItem>
+                      )
+                    })}
+                  </SelectContent>
+                </Select>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="price"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>가격</FormLabel>
+                <FormControl>
+                  <Input placeholder="가격을 입력해 주세요." {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>설명</FormLabel>
+                <FormControl>
+                  <Input placeholder="상품 설명을 입력해 주세요." {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="image"
+            render={({ field: { onChange, value, ...rest } }) => (
+              <FormItem>
+                <FormLabel>이미지</FormLabel>
+                <FormControl>
+                  <div className="flex justify-between ">
+                    <Input
+                      type="file"
+                      {...rest}
+                      onChange={(event) => {
+                        const displayUrl = getImageData(event.target.files![0])
+                        setPreview(displayUrl)
+                        setImage(event.target.files![0])
+                        onChange(event.target.files![0])
+                      }}
+                      className="w-[50%]"
+                    />
+                    <picture className="w-[150px] h-[150px] relative ">
+                      {preview && (
+                        <Image src={preview} alt="product image" fill />
+                      )}
+                    </picture>
+                  </div>
+                </FormControl>
 
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <div className="flex justify-end">
-          <Button type="submit" size="lg">
-            생성
-          </Button>
-        </div>
-      </form>
-    </Form>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <div className="flex justify-end">
+            <Button type="submit" size="lg">
+              생성
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </>
   )
 }
 

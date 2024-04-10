@@ -26,5 +26,6 @@ export interface IProduct {
   description: string
   image_src: string
   tag: 'recommend' | null
-  options: (OptionBooleanType | OptionSelectType)[]
+  options?: (OptionBooleanType | OptionSelectType)[]
+  store: string
 }
