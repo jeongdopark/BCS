@@ -1,5 +1,3 @@
-'use client'
-
 import { QUERY_KEY } from '@/constants/constant'
 import { client } from '@/utils/supabase'
 import { useSuspenseQuery } from '@tanstack/react-query'
