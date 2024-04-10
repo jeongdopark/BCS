@@ -8,9 +8,9 @@ interface IProps {
 
 export default function Layout({ children, category, modal }: IProps) {
   return (
-    <div className="flex">
-      {category}
-      {children}
+    <div className="flex max-w-screen">
+      <div className="w-[15%]">{category}</div>
+      <div className="w-[85%]">{children}</div>
       {modal}
     </div>
   )

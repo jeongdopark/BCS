@@ -4,14 +4,6 @@ import useCategoriesQuery from '@/hooks/query/useCategoriesQuery'
 import { ICategory } from '@/types/category'
 import { useRouter } from 'next/navigation'
 
-const CATEGORY = {
-  커피: 'coffee',
-  음료: 'beverage',
-  디저트: 'dessert',
-  녹차: 'tea',
-  디카페인: 'decaf',
-}
-
 const CategoryList = ({ store_id }: { store_id: string }) => {
   const { data: categories } = useCategoriesQuery(store_id)
   const router = useRouter()
@@ -25,9 +17,7 @@ const CategoryList = ({ store_id }: { store_id: string }) => {
             <Button
               key={category.id}
               size="lg"
-              onClick={() =>
-                router.push(`?category=${CATEGORY[category.name]}`)
-              }
+              onClick={() => router.push(`?category=${category.english_name}`)}
             >
               {category.name}
             </Button>

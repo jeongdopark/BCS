@@ -24,5 +24,5 @@ export const updateCategory = async ({
 }
 
 export const deleteCategory = async (id: number) => {
-  const { error } = await client.from('category').delete().eq('id', id)
+  const { error } = await client.from('categories').delete().eq('id', id)
 }
