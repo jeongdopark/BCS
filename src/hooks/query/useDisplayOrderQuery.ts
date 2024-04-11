@@ -3,7 +3,9 @@ import { client } from '@/utils/supabase'
 import { useQuery } from '@tanstack/react-query'
 
 export interface IOrder {
+  takeout: boolean
   status: 'receive' | 'complete' | 'cancel'
+  created_at: Date
   end_at: Date | null
   id: number
   orders: {

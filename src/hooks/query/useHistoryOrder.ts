@@ -8,11 +8,13 @@ export interface IOrder {
   product_id: string
   product_name: string
   uid: number
+  takeout: boolean
 }
 
 interface IHistoryOrder {
   id: string
   price: number
+  takeout: boolean
   store_id: string
   created_at: Date
   orders: IOrder[]
@@ -31,7 +33,6 @@ const getHistoryOrder = async (
     .eq('store_id', store_id)
     .gte('created_at', new Date(date).toISOString())
     .lte('created_at', targetDate.toDateString())
-  console.log(order_history, error)
   return order_history
 }
 

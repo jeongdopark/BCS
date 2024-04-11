@@ -3,16 +3,17 @@
 import { OrderStatus } from '@/types/display-order'
 import OrderCard from './OrderCard'
 import { IDisplayOrder } from '@/hooks/query/useDisplayOrderQuery'
-import { ORDER_DISPLAY_PAGINATION_SIZE } from '@/app/store/[store_id]/display-order/page'
+import { ORDER_DISPLAY_PAGINATION_SIZE } from '@/constants/constant'
+import FallbackOrderList from './skeleton/FallbackOrderCard'
 
 interface IProps {
   page: number
   status: OrderStatus
-  orders: IDisplayOrder
+  orders: IDisplayOrder | undefined
 }
 
 const OrderList = ({ page, status, orders }: IProps) => {
-  if (!orders) return
+  if (!orders) return <FallbackOrderList />
 
   const filtered_orders = orders
     .data!.filter((order) => {

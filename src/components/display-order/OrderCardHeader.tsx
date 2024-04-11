@@ -6,22 +6,38 @@ import { GoClock } from 'react-icons/go'
 import { OrderStatus } from '@/types/display-order'
 import { ORDER_STATUS } from '@/constants/constant'
 import { orderUpdate } from '@/actions/display-order'
+import { format } from 'date-fns'
 
 interface IProps {
   order_status: OrderStatus
   order_id: number
+  takeout: boolean
+  created_at: Date
 }
 
-const OrderCardHeader = ({ order_status, order_id }: IProps) => {
-  const [timeTrigger, setTimeTrigger] = useState(false)
+const OrderCardHeader = ({
+  order_status,
+  order_id,
+  takeout,
+  created_at,
+}: IProps) => {
   const [elapsedMinute, setElapsedMinute] = useState(0)
 
   return (
     <CardHeader className="bg-gray-900 text-white p-5 rounded-t-md flex flex-col gap-3  ">
       <div className="flex justify-between">
-        <strong>#{order_id}</strong>
-        <div className="flex gap-2">
-          {order_status === ORDER_STATUS.RECEIVE && <span>time</span>}
+        <div className="flex gap-3">
+          <strong>#{order_id}</strong>
+          {takeout ? (
+            <Badge className="bg-white text-black">포장</Badge>
+          ) : (
+            <Badge className="bg-white text-black">매장</Badge>
+          )}
+        </div>
+        <div className="flex">
+          {order_status === ORDER_STATUS.RECEIVE && (
+            <span>{format(new Date(created_at), 'HH:mm')}</span>
+          )}
           {order_status === ORDER_STATUS.RECEIVE ? (
             <Badge>
               <GoClock />

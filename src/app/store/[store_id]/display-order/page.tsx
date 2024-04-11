@@ -6,9 +6,7 @@ import PageController from '@/components/display-order/PageController'
 import { useDisplayOrderQuery } from '@/hooks/query/useDisplayOrderQuery'
 import { useEffect, useState } from 'react'
 import { client } from '@/utils/supabase'
-
-export const ORDER_DISPLAY_PAGINATION_SIZE = 4
-
+import { ORDER_DISPLAY_PAGINATION_SIZE } from '@/constants/constant'
 export default function DisplayOrderPage({
   searchParams,
   params,
@@ -57,7 +55,6 @@ export default function DisplayOrderPage({
     }
   }, [orders])
 
-  if (orders === undefined) return <div>Loading...</div>
   return (
     <div className="relative h-lvh">
       <Header orders={orders} store_id={params.store_id} />

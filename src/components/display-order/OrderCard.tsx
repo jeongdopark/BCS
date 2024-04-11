@@ -7,7 +7,12 @@ import { IOrder } from '@/hooks/query/useDisplayOrderQuery'
 const OrderCard = ({ order }: { order: IOrder }) => {
   return (
     <Card className="w-[25%]">
-      <OrderCardHeader order_status={order.status} order_id={order.id} />
+      <OrderCardHeader
+        created_at={order.created_at}
+        order_status={order.status}
+        order_id={order.id}
+        takeout={order.takeout}
+      />
       <CardContent>
         {order.orders.map((e, idx) => (
           <div

@@ -31,7 +31,7 @@ export default function Layout({
       icon: <BiCategory />,
     },
     {
-      url: `/store/${params.store_id}/display-order`,
+      url: `/store/${params.store_id}/display-order?status=receive&page=1`,
       name: '주문 현황',
       icon: <BiCategory />,
     },

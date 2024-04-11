@@ -5,6 +5,8 @@ export const PAGINATION = {
   PRODUCT: 4,
 }
 
+export const ORDER_DISPLAY_PAGINATION_SIZE = 4
+
 export const ORDER_STATUS = {
   RECEIVE: 'receive',
   COMPLETE: 'complete',

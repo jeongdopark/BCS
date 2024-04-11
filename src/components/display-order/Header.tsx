@@ -6,15 +6,19 @@ import { ORDER_STATUS } from '@/constants/constant'
 import React from 'react'
 import { IDisplayOrder } from '@/hooks/query/useDisplayOrderQuery'
 import { useRouter } from 'next/navigation'
+import FallbackHeader from './skeleton/FallbackHeader'
 
 const Header = ({
   orders,
   store_id,
 }: {
-  orders: IDisplayOrder
+  orders: IDisplayOrder | undefined
   store_id: string
 }) => {
   const router = useRouter()
+
+  if (orders === undefined) return <FallbackHeader />
+
   const TAB_TRIGGER_ELEMS = [
     {
       value: 'receive',
@@ -37,7 +41,7 @@ const Header = ({
   ]
 
   return (
-    <div className="w-full h-[100px] justify-center flex items-center bg-gray-200 p-7">
+    <div className="w-full h-[100px] flex justify-between items-center bg-gray-200 p-7">
       <Button
         className="bg-gray-200 hover:bg-gray-200"
         onClick={() => router.push(`/store/${store_id}/calendar`)}
@@ -63,6 +67,7 @@ const Header = ({
           })}
         </TabsList>
       </Tabs>
+      <Button>초기화</Button>
     </div>
   )
 }
