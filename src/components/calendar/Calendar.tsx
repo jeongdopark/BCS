@@ -1,5 +1,4 @@
 'use client'
-import { useHistoryOrder } from '@/hooks/query/useHistoryOrder'
 import { useMemo, useState } from 'react'
 import { SlArrowUp, SlArrowDown } from 'react-icons/sl'
 import {
@@ -20,10 +19,6 @@ import TotalRevenue from './TotalRevenue'
 import Header from './Header'
 import { Button } from '@/components/ui/button'
 import CalendarCell from './CalendarCell'
-
-type MOCK_DATA = {
-  [key: string]: History[]
-}
 
 const Calendar = ({ store_id }: { store_id: string }) => {
   const [currentDate, setCurrentDate] = useState(new Date())
@@ -62,11 +57,11 @@ const Calendar = ({ store_id }: { store_id: string }) => {
   }, [startDate, endDate])
 
   return (
-    <div className="flex justify-center w-full gap-10">
-      <div className="flex w-[60%] flex-col justify-center items-center gap-2">
+    <div className="flex justify-center w-full gap-10 mt-10">
+      <div className="flex w-[80%] flex-col  items-center gap-2">
         <Header currentDate={currentDate} setCurrentDate={setCurrentDate} />
         <TotalRevenue />
-        <div className="w-full h-[70%] flex justify-center">
+        <div className="w-full h-[80%] flex justify-center">
           <section className="w-full  p-5 border-2 border-gray-200 rounded-xl flex flex-col gap-4">
             <div className="w-full flex flex-row justify-between">
               <div className="flex gap-4">

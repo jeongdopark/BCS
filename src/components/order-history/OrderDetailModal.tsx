@@ -6,21 +6,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
-import { format } from 'date-fns'
 import { Button } from '../ui/button'
 import { IOrder } from '@/hooks/query/useHistoryOrder'
 import BasketCard from '../order/funnel/BasketCard'
 
-const OrderDetailModal = ({ orders }: { orders: IOrder[] }) => {
+interface IProps {
+  isTakeout: boolean
+  price: number
+  time: string
+  orders: IOrder[]
+}
+
+const OrderDetailModal = ({ orders, isTakeout, price, time }: IProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -34,6 +31,9 @@ const OrderDetailModal = ({ orders }: { orders: IOrder[] }) => {
               {orders.map((order) => {
                 return <BasketCard order={order} />
               })}
+              {isTakeout ? <strong>포장</strong> : <strong>매장</strong>}
+              <strong>결제 금액 : {price.toLocaleString()}원</strong>
+              <strong>결제 시각 : {time}</strong>
             </div>
           </DialogDescription>
         </DialogHeader>

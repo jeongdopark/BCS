@@ -23,7 +23,11 @@ export default async function OrderHistory({
 
   return (
     <HydrationBoundary state={dehydratedData}>
-      <OrderHistoryDetail store_id={params.store_id} date={parsedDate} />
+      <OrderHistoryDetail
+        store_id={params.store_id}
+        date={parsedDate}
+        params_date={params.date}
+      />
     </HydrationBoundary>
   )
 }

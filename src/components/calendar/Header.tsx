@@ -15,8 +15,8 @@ const Header = ({
     }
   }
   return (
-    <div className="flex items-center  w-full">
-      <div className="flex flex-row items-center">
+    <div className="flex w-full">
+      <div className="flex flex-row ">
         <div className="text-[25px] font-medium">
           {format(currentDate, 'yyyy년')}
         </div>
