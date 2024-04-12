@@ -22,6 +22,7 @@ export default async function Product({
       getPaginatedProducts(
         (Number(searchParams.page) - 1) * PAGINATION.PRODUCT,
         Number(searchParams.page) * PAGINATION.PRODUCT - 1,
+        params.store_id,
       ),
   })
 
@@ -32,7 +33,10 @@ export default async function Product({
       <div className="w-[65%] mt-[60px] flex flex-col gap-5 ">
         <Header store_id={params.store_id} />
         <Suspense fallback={<TableFallback />}>
-          <ProductTable current_page={Number(searchParams.page)} />
+          <ProductTable
+            current_page={Number(searchParams.page)}
+            store_id={params.store_id}
+          />
         </Suspense>
       </div>
     </HydrationBoundary>

@@ -5,6 +5,7 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 export const getPaginatedProducts = async (
   start: number,
   end: number,
+  store_id: string,
 ): Promise<{
   data:
     | {
@@ -23,6 +24,7 @@ export const getPaginatedProducts = async (
     .select('*, category(name)', {
       count: 'exact',
     })
+    .eq('store', store_id)
     .range(start, end)
   if (error) {
     throw new Error(error.message)
@@ -30,9 +32,13 @@ export const getPaginatedProducts = async (
   return { data, count }
 }
 
-export const usePaginatedProducts = (start: number, end: number) => {
+export const usePaginatedProducts = (
+  start: number,
+  end: number,
+  store_id: string,
+) => {
   return useSuspenseQuery({
-    queryKey: ['PRODUCT', start],
-    queryFn: () => getPaginatedProducts(start, end),
+    queryKey: ['PRODUCT', start, store_id],
+    queryFn: () => getPaginatedProducts(start, end, store_id),
   })
 }

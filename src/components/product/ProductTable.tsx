@@ -22,10 +22,17 @@ import {
   DropdownMenuItem,
 } from '../ui/dropdown-menu'
 
-const ProductTable = ({ current_page }: { current_page: number }) => {
+const ProductTable = ({
+  current_page,
+  store_id,
+}: {
+  current_page: number
+  store_id: string
+}) => {
   const { data } = usePaginatedProducts(
     (current_page - 1) * PAGINATION.PRODUCT,
     current_page * PAGINATION.PRODUCT - 1,
+    store_id,
   )
 
   return (

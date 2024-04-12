@@ -22,7 +22,7 @@ export const getCategories = async (
 
 const useCategoriesQuery = (store_id: string) => {
   return useSuspenseQuery({
-    queryKey: [QUERY_KEY.CATEGORY],
+    queryKey: [QUERY_KEY.CATEGORY, store_id],
     queryFn: () => getCategories(store_id),
   })
 }

@@ -17,7 +17,7 @@ export const getFilterByCategory = async (
 
 export const useFilterByCategory = (category: string, store_id: string) => {
   return useSuspenseQuery({
-    queryKey: [QUERY_KEY.PRODUCT, category],
+    queryKey: [QUERY_KEY.PRODUCT, category, store_id],
     queryFn: () => getFilterByCategory(category, store_id),
   })
 }

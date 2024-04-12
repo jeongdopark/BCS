@@ -14,7 +14,7 @@ export const getRecommendProduct = async (store_id: string) => {
 
 export const useRecommendProduct = (store_id: string) => {
   return useSuspenseQuery({
-    queryKey: [QUERY_KEY.PRODUCT, 'recommend'],
+    queryKey: [QUERY_KEY.PRODUCT, 'recommend', store_id],
     queryFn: () => getRecommendProduct(store_id),
   })
 }

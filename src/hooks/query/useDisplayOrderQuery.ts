@@ -32,7 +32,7 @@ const getDisplayOrder = async (store_id: string): Promise<IDisplayOrder> => {
 
 export const useDisplayOrderQuery = (store_id: string) => {
   return useQuery({
-    queryKey: ['DISPLAY_ORDER'],
+    queryKey: ['DISPLAY_ORDER', store_id],
     queryFn: () => getDisplayOrder(store_id),
   })
 }

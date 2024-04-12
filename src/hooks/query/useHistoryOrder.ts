@@ -38,7 +38,7 @@ const getHistoryOrder = async (
 
 export const useHistoryOrder = (store_id: string, date: Date) => {
   return useQuery({
-    queryKey: ['ORDER_HISTORY', new Date(date).toISOString()],
+    queryKey: ['ORDER_HISTORY', new Date(date).toISOString(), store_id],
     queryFn: () => getHistoryOrder(store_id, date),
   })
 }
