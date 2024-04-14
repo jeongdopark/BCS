@@ -7,6 +7,7 @@ import React from 'react'
 import { IDisplayOrder } from '@/hooks/query/useDisplayOrderQuery'
 import { useRouter } from 'next/navigation'
 import FallbackHeader from './skeleton/FallbackHeader'
+import InitModal from './InitModal'
 
 const Header = ({
   orders,
@@ -67,7 +68,7 @@ const Header = ({
           })}
         </TabsList>
       </Tabs>
-      <Button>초기화</Button>
+      <InitModal store_id={store_id} />
     </div>
   )
 }
