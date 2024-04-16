@@ -3,10 +3,10 @@ import { OrderStatus } from '@/types/display-order'
 import Header from '@/components/display-order/Header'
 import OrderList from '@/components/display-order/OrderList'
 import PageController from '@/components/display-order/PageController'
-import { useDisplayOrderQuery } from '@/hooks/query/useDisplayOrderQuery'
 import { useEffect, useState } from 'react'
 import { client } from '@/utils/supabase'
 import { ORDER_DISPLAY_PAGINATION_SIZE } from '@/constants/constant'
+import { useDisplayOrder } from '@/hooks/display-order/useDisplayOrderService'
 export default function DisplayOrderPage({
   searchParams,
   params,
@@ -16,7 +16,7 @@ export default function DisplayOrderPage({
 }) {
   const [totalPage, setTotalPage] = useState(0)
   const page = searchParams.page
-  const { data: orders, refetch } = useDisplayOrderQuery(params.store_id)
+  const { data: orders, refetch } = useDisplayOrder(params.store_id)
 
   useEffect(() => {
     const channel = client

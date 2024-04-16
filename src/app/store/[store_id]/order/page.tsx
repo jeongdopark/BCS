@@ -6,12 +6,12 @@ import {
   QueryClient,
   dehydrate,
 } from '@tanstack/react-query'
-import { QUERY_KEY } from '@/constants/constant'
-import { getFilterByCategory } from '@/hooks/query/useFilterByCategoryProduct'
-import { getRecommendProduct } from '@/hooks/query/useRecommendProduct'
+import ProductService from '@/hooks/product/ProductService'
 import { Suspense } from 'react'
 import RecommendFallback from '@/components/fallback/RecommendFallback'
 import ProductListFallback from '@/components/fallback/ProductListFallback'
+import { PRODUCT_QUERY_KEYS } from '@/hooks/product/queries'
+
 export default async function Order({
   searchParams,
   params,
@@ -22,12 +22,16 @@ export default async function Order({
   const queryClient = new QueryClient()
 
   await queryClient.prefetchQuery({
-    queryKey: [QUERY_KEY.PRODUCT, 'recommend'],
-    queryFn: () => getRecommendProduct(params.store_id),
+    queryKey: PRODUCT_QUERY_KEYS.recommend_product(),
+    queryFn: () => ProductService.getRecommendProduct(params.store_id),
   })
   await queryClient.prefetchQuery({
-    queryKey: [QUERY_KEY.PRODUCT, searchParams.category],
-    queryFn: () => getFilterByCategory(searchParams.category, params.store_id),
+    queryKey: PRODUCT_QUERY_KEYS.filter_by_category(searchParams.category),
+    queryFn: () =>
+      ProductService.getFilterByCategory({
+        category: searchParams.category,
+        store_id: params.store_id,
+      }),
   })
 
   const dehydrateData = dehydrate(queryClient)

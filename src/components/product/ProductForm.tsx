@@ -20,10 +20,11 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import useCategoriesQuery from '@/hooks/query/useCategoriesQuery'
-import { useState } from 'react'
+import { useCategories } from '@/hooks/category/useCategoryService'
+import { Dispatch, SetStateAction, useState } from 'react'
 import { client } from '@/utils/supabase'
-import useCreateProduct from '@/hooks/mutation/useCreateProduct'
+import { useCreateProduct } from '@/hooks/product/useProductService'
+import Toast from '../common/Toast'
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -38,8 +39,14 @@ const formSchema = z.object({
   image: z.any(),
 })
 
-const ProductForm = ({ store_id }: { store_id: string }) => {
-  const { data: categories } = useCategoriesQuery(store_id)
+const ProductForm = ({
+  store_id,
+  setIsModalOpen,
+}: {
+  store_id: string
+  setIsModalOpen: Dispatch<SetStateAction<boolean>>
+}) => {
+  const { data: categories } = useCategories(store_id)
   const createProduct = useCreateProduct()
   const [preview, setPreview] = useState<string>()
   const [image, setImage] = useState<File>()
@@ -57,23 +64,34 @@ const ProductForm = ({ store_id }: { store_id: string }) => {
 
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(image)
-
     const createProductHandler = async () => {
       const { data, error } = await client.storage
         .from('BCS')
         .upload(`${store_id}/${image?.name}`, image!)
 
       if (data) {
-        createProduct.mutate({
-          name: values.name,
-          price: values.price,
-          image_src: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${data.fullPath}`,
-          description: values.description,
-          category: values.category,
-          store: store_id,
-          tag: 'recommend',
-        })
+        createProduct.mutate(
+          {
+            name: values.name,
+            price: values.price,
+            image_src: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${data.fullPath}`,
+            description: values.description,
+            category: values.category,
+            store: store_id,
+            tag: 'recommend',
+          },
+          {
+            onSuccess: () => {
+              console.log('success')
+              Toast({
+                title: '상품 등록',
+                description: '상품 등록 완료',
+                mode: 'success',
+              })
+              setIsModalOpen(false)
+            },
+          },
+        )
       }
     }
     createProductHandler()
@@ -111,7 +129,7 @@ const ProductForm = ({ store_id }: { store_id: string }) => {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    {categories.map((category) => {
+                    {categories!.map((category) => {
                       return (
                         <SelectItem value={category.id}>
                           {category.name}

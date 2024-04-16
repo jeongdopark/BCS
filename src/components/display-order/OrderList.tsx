@@ -2,7 +2,7 @@
 
 import { OrderStatus } from '@/types/display-order'
 import OrderCard from './OrderCard'
-import { IDisplayOrder } from '@/hooks/query/useDisplayOrderQuery'
+import { IDisplayOrder } from '@/hooks/history/HistoryService'
 import { ORDER_DISPLAY_PAGINATION_SIZE } from '@/constants/constant'
 import FallbackOrderList from './skeleton/FallbackOrderCard'
 

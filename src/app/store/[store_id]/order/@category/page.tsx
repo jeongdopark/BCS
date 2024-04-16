@@ -1,7 +1,7 @@
 import CategoryFallback from '@/components/fallback/CategoryFallback'
 import CategoryList from '@/components/order/CategoryList'
-import { QUERY_KEY } from '@/constants/constant'
-import { getCategories } from '@/hooks/query/useCategoriesQuery'
+import CategoryService from '@/hooks/category/CategoryService'
+import { CATEGORY_QUERY_KEYS } from '@/hooks/category/queries'
 import {
   HydrationBoundary,
   QueryClient,
@@ -16,8 +16,8 @@ export default async function Category({
 }) {
   const queryClient = new QueryClient()
   await queryClient.prefetchQuery({
-    queryKey: [QUERY_KEY.CATEGORY],
-    queryFn: () => getCategories(params.store_id),
+    queryKey: CATEGORY_QUERY_KEYS.all,
+    queryFn: () => CategoryService.getCategories(params.store_id),
   })
 
   const dehydrateData = dehydrate(queryClient)

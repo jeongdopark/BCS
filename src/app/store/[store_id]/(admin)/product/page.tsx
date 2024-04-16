@@ -1,8 +1,9 @@
 import TableFallback from '@/components/fallback/CategoryFallback'
 import Header from '@/components/product/Header'
 import ProductTable from '@/components/product/ProductTable'
-import { PAGINATION, QUERY_KEY } from '@/constants/constant'
-import { getPaginatedProducts } from '@/hooks/query/usePaginatedProducts'
+import { PAGINATION } from '@/constants/constant'
+import ProductService from '@/hooks/product/ProductService'
+import { PRODUCT_QUERY_KEYS } from '@/hooks/product/queries'
 
 import { QueryClient, dehydrate } from '@tanstack/query-core'
 import { HydrationBoundary } from '@tanstack/react-query'
@@ -17,9 +18,11 @@ export default async function Product({
 }) {
   const queryClient = new QueryClient()
   await queryClient.prefetchQuery({
-    queryKey: [QUERY_KEY.PRODUCT],
+    queryKey: PRODUCT_QUERY_KEYS.page(
+      (Number(searchParams.page) - 1) * PAGINATION.PRODUCT,
+    ),
     queryFn: () =>
-      getPaginatedProducts(
+      ProductService.getPaginatedProducts(
         (Number(searchParams.page) - 1) * PAGINATION.PRODUCT,
         Number(searchParams.page) * PAGINATION.PRODUCT - 1,
         params.store_id,

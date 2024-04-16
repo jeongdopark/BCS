@@ -2,7 +2,7 @@
 
 import ProductCard from './ProductCard'
 import { IProduct } from '@/types/product'
-import { useFilterByCategory } from '@/hooks/query/useFilterByCategoryProduct'
+import { useFilterByCategory } from '@/hooks/product/useProductService'
 
 const ProductList = ({
   category,
@@ -11,7 +11,7 @@ const ProductList = ({
   category: string
   store_id: string
 }) => {
-  const { data: products } = useFilterByCategory(category, store_id)
+  const { data: products } = useFilterByCategory({ category, store_id })
   return (
     <div className="flex flex-col w-[90%] gap-3">
       <strong>{category}</strong>

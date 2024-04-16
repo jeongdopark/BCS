@@ -2,7 +2,7 @@
 
 import { Card, CardContent } from '@/components/ui/card'
 import OrderCardHeader from './OrderCardHeader'
-import { IOrder } from '@/hooks/query/useDisplayOrderQuery'
+import { IOrder } from '@/hooks/history/HistoryService'
 
 const OrderCard = ({ order }: { order: IOrder }) => {
   return (

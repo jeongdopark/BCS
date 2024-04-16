@@ -7,8 +7,11 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import useCategoryUpdate from '@/hooks/mutation/useCategoryUpdate'
-import useCreateCategory from '@/hooks/mutation/useCreateCategory'
+
+import {
+  useCategoryUpdate,
+  useCreateCategory,
+} from '@/hooks/category/useCategoryService'
 import { Input } from '@/components/ui/input'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'

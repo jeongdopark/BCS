@@ -1,6 +1,6 @@
 import ProductModal from '@/components/order/ProductModal'
-import { QUERY_KEY } from '@/constants/constant'
-import { getProduct } from '@/hooks/query/useProductQuery'
+import ProductService from '@/hooks/product/ProductService'
+import { PRODUCT_QUERY_KEYS } from '@/hooks/product/queries'
 import {
   HydrationBoundary,
   QueryClient,
@@ -18,8 +18,8 @@ export default async function Modal({ params }: IParams) {
   const PRODUCT_ID = params.id
   const queryClient = new QueryClient()
   await queryClient.prefetchQuery({
-    queryKey: [QUERY_KEY.PRODUCT, PRODUCT_ID],
-    queryFn: () => getProduct(PRODUCT_ID),
+    queryKey: PRODUCT_QUERY_KEYS.detail(PRODUCT_ID),
+    queryFn: () => ProductService.getProduct(PRODUCT_ID),
   })
 
   const dehydrateData = dehydrate(queryClient)

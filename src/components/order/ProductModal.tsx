@@ -5,7 +5,7 @@ import { Dialog, DialogContent } from '@/components/ui/dialog'
 import { DialogTrigger } from '@radix-ui/react-dialog'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import { useProductQuery } from '@/hooks/query/useProductQuery'
+import { useProduct } from '@/hooks/product/useProductService'
 import TabTypeOption from './TabTypeOption'
 import CheckTypeOption from './CheckTypeOption'
 import { useRef, useState } from 'react'
@@ -23,7 +23,7 @@ interface seletedOption {
 const ProductModal = ({ id }: IProps) => {
   const addOrder = useOrderStore((state: any) => state.addOrder)
   const addAmount = useOrderStore((state: any) => state.addAmount)
-  const { data } = useProductQuery(id)
+  const { data } = useProduct(id)
   const router = useRouter()
   const PRODUCT_PRICE = useRef(data[0].price)
   const UID = Math.random() * 1000

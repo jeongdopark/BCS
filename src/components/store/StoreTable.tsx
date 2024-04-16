@@ -11,11 +11,11 @@ import {
 import { Button } from '../ui/button'
 import { IoSettingsSharp } from 'react-icons/io5'
 import { useRouter } from 'next/navigation'
-import useStoreQuery from '@/hooks/query/useStoreQuery'
+import { useStore } from '@/hooks/store/useStoreService'
 
 const StoreTable = () => {
   const router = useRouter()
-  const { data: stores } = useStoreQuery()
+  const { data: stores } = useStore()
 
   return (
     <Table>

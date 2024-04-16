@@ -22,8 +22,8 @@ export const createProduct = async ({
     .from('products')
     .insert([{ name, price, image_src, description, category, store, tag }])
     .select()
+}
 
-  console.log(name, price, image_src, description, category, store, tag)
-
-  console.log(data, error)
+export const deleteProduct = async (product_id: string) => {
+  await client.from('products').delete().eq('id', product_id)
 }

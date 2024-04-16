@@ -1,6 +1,6 @@
 'use client'
 
-import { useHistoryOrder } from '@/hooks/query/useHistoryOrder'
+import { useOrderHistory } from '@/hooks/history/useHistoryService'
 import {
   Table,
   TableBody,
@@ -25,7 +25,7 @@ const OrderHistoryDetail = ({
   params_date: string
   date: Date
 }) => {
-  const { data: history_order } = useHistoryOrder(store_id, date)
+  const { data: history_order } = useOrderHistory({ store_id, date })
   const router = useRouter()
   const DAY_REVENUE = history_order?.reduce((acc, curr) => acc + curr.price, 0)
   function parseAndFormatDate(dateStr: string) {

@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/table'
 import { BsThreeDots } from 'react-icons/bs'
 
-import { usePaginatedProducts } from '@/hooks/query/usePaginatedProducts'
+import { usePaginatedProducts } from '@/hooks/product/useProductService'
 import Image from 'next/image'
 import CustomPagination from '../common/Pagination'
 import { PAGINATION } from '@/constants/constant'
@@ -21,6 +21,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from '../ui/dropdown-menu'
+import DeleteModal from './DeleteModal'
+import { useState } from 'react'
 
 const ProductTable = ({
   current_page,
@@ -29,11 +31,14 @@ const ProductTable = ({
   current_page: number
   store_id: string
 }) => {
-  const { data } = usePaginatedProducts(
-    (current_page - 1) * PAGINATION.PRODUCT,
-    current_page * PAGINATION.PRODUCT - 1,
+  const { data } = usePaginatedProducts({
+    start: (current_page - 1) * PAGINATION.PRODUCT,
+    end: current_page * PAGINATION.PRODUCT - 1,
     store_id,
-  )
+  })
+
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
 
   return (
     <>
@@ -79,7 +84,12 @@ const ProductTable = ({
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                       <DropdownMenuItem>수정</DropdownMenuItem>
-                      <DropdownMenuItem>삭제</DropdownMenuItem>
+                      <DeleteModal
+                        key={product.id}
+                        product={product}
+                        isDeleteModalOpen={isDeleteModalOpen}
+                        setIsDeleteModalOpen={setIsDeleteModalOpen}
+                      />
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </TableCell>

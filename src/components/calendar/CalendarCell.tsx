@@ -1,26 +1,25 @@
 'use client'
 
 import { format } from 'date-fns'
+import { useOrderHistory } from '@/hooks/history/useHistoryService'
 import { useHistoryOrder } from '@/hooks/query/useHistoryOrder'
 import { useRouter } from 'next/navigation'
 
 const CalendarCell = ({
   isCurrentMonth,
   isToday,
-  DAY_REVENUE,
   date,
   store_id,
 }: {
   isCurrentMonth: boolean
   isToday: boolean
-  DAY_REVENUE: number | null
   date: Date
   store_id: string
 }) => {
   const router = useRouter()
   const URI_DATE = format(new Date(date), 'yyyyMMdd')
 
-  const { data: history_order } = useHistoryOrder(store_id, date)
+  const { data: history_order } = useOrderHistory({ store_id, date })
   const TOTAL_REVENUE = history_order?.reduce(
     (acc, curr) => acc + curr.price,
     0,

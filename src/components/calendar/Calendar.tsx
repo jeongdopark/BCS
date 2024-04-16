@@ -64,14 +64,6 @@ const Calendar = ({ store_id }: { store_id: string }) => {
         <div className="w-full h-[80%] flex justify-center">
           <section className="w-full  p-5 border-2 border-gray-200 rounded-xl flex flex-col gap-4">
             <div className="w-full flex flex-row justify-between">
-              <div className="flex gap-4">
-                <div className="flex items-center gap-1 text-sm">
-                  <div className="w-4 h-4 bg-blue-400 rounded-full"></div>최저
-                </div>
-                <div className="flex items-center gap-1 text-sm">
-                  <div className="w-4 h-4 bg-red-400 rounded-full"></div>최고
-                </div>
-              </div>
               <div className="text-sm text-gray-500">
                 날짜를 누르면 해당일의 상세내역을 볼 수 있어요.
               </div>
@@ -96,14 +88,11 @@ const Calendar = ({ store_id }: { store_id: string }) => {
                         const isToday =
                           format(v, 'yyyyMMdd') ===
                           format(new Date(), 'yyyyMMdd')
-                        let DAY_REVENUE = null
-
                         return (
                           <CalendarCell
                             store_id={store_id}
                             isCurrentMonth={isCurrentMonth}
                             isToday={isToday}
-                            DAY_REVENUE={DAY_REVENUE}
                             date={v}
                           />
                         )

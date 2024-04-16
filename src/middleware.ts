@@ -1,13 +1,14 @@
 import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { client } from './utils/supabase'
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next()
-  const supabase = createMiddlewareClient({ req, res })
+
   const {
     data: { session },
-  } = await supabase.auth.getSession()
+  } = await client.auth.getSession()
 
   // 로그인 된 상태
   if (session) {

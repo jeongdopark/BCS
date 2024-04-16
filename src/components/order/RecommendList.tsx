@@ -8,10 +8,10 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel'
-import { useRecommendProduct } from '@/hooks/query/useRecommendProduct'
+import { useRecommendProducts } from '@/hooks/product/useProductService'
 
 const RecommendList = async ({ store_id }: { store_id: string }) => {
-  let { data: products, error } = useRecommendProduct(store_id)
+  let { data: products, error } = useRecommendProducts(store_id)
 
   return (
     <div className="w-[90%] flex flex-col gap-3">

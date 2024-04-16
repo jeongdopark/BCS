@@ -15,7 +15,9 @@ const Header = ({ store_id }: { store_id: string }) => {
         setOpen={setIsModalOpen}
         title="상품 추가"
         trigger={<Button size="lg">추가</Button>}
-        InnerComponent={<ProductForm store_id={store_id} />}
+        InnerComponent={
+          <ProductForm store_id={store_id} setIsModalOpen={setIsModalOpen} />
+        }
       />
     </header>
   )

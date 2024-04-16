@@ -1,11 +1,11 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import useCategoriesQuery from '@/hooks/query/useCategoriesQuery'
+import { useCategories } from '@/hooks/category/useCategoryService'
 import { ICategory } from '@/types/category'
 import { useRouter } from 'next/navigation'
 
 const CategoryList = ({ store_id }: { store_id: string }) => {
-  const { data: categories } = useCategoriesQuery(store_id)
+  const { data: categories } = useCategories(store_id)
   const router = useRouter()
 
   return (

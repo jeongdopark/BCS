@@ -2,25 +2,30 @@ import CategoryTable from '@/components/category/CategoryTable'
 import Header from '@/components/category/Header'
 import TableFallback from '@/components/fallback/CategoryFallback'
 import { PAGINATION } from '@/constants/constant'
-import { getPaginatedCategories } from '@/hooks/query/usePaginatedCategories'
-
+import CategoryService from '@/hooks/category/CategoryService'
+import { CATEGORY_QUERY_KEYS } from '@/hooks/category/queries'
 import { QueryClient, dehydrate } from '@tanstack/query-core'
 import { HydrationBoundary } from '@tanstack/react-query'
 import { Suspense } from 'react'
 
 export default async function Category({
   searchParams,
+  params,
 }: {
   searchParams: { page: string }
+  params: { store_id: string }
 }) {
   const queryClient = new QueryClient()
   await queryClient.prefetchQuery({
-    queryKey: ['CATEGORY'],
+    queryKey: CATEGORY_QUERY_KEYS.page(
+      (Number(searchParams.page) - 1) * PAGINATION.CATEGORY,
+    ),
     queryFn: () =>
-      getPaginatedCategories(
-        (Number(searchParams.page) - 1) * PAGINATION.CATEGORY,
-        Number(searchParams.page) * PAGINATION.CATEGORY - 1,
-      ),
+      CategoryService.getPaginatedCategories({
+        start: (Number(searchParams.page) - 1) * PAGINATION.CATEGORY,
+        end: Number(searchParams.page) * PAGINATION.CATEGORY - 1,
+        store_id: params.store_id,
+      }),
   })
 
   const dehydratedData = dehydrate(queryClient)
@@ -30,7 +35,10 @@ export default async function Category({
       <div className="w-[65%] mt-[60px] flex flex-col gap-5 ">
         <Header />
         <Suspense fallback={<TableFallback />}>
-          <CategoryTable current_page={Number(searchParams.page)} />
+          <CategoryTable
+            current_page={Number(searchParams.page)}
+            store_id={params.store_id}
+          />
         </Suspense>
       </div>
     </HydrationBoundary>

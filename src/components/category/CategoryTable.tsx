@@ -13,16 +13,26 @@ import { Button } from '../ui/button'
 import { useState } from 'react'
 import Modal from '../common/Modal'
 import CategoryForm from './CategoryForm'
-import useCategoryDelete from '@/hooks/mutation/useCategoryDelete'
 import CustomPagination from '../common/Pagination'
-import { usePaginatedCategories } from '@/hooks/query/usePaginatedCategories'
-import { PAGINATION } from '@/constants/constant'
 
-const CategoryTable = ({ current_page }: { current_page: number }) => {
-  const { data } = usePaginatedCategories(
-    (current_page - 1) * 5,
-    current_page * 5 - 1,
-  )
+import { PAGINATION } from '@/constants/constant'
+import {
+  useCategoryDelete,
+  usePaginatedCategories,
+} from '@/hooks/category/useCategoryService'
+
+const CategoryTable = ({
+  current_page,
+  store_id,
+}: {
+  current_page: number
+  store_id: string
+}) => {
+  const { data } = usePaginatedCategories({
+    start: (current_page - 1) * 5,
+    end: current_page * 5 - 1,
+    store_id,
+  })
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [selectedtId, setSelectedId] = useState<number>()

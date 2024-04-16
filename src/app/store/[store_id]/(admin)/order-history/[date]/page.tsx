@@ -5,7 +5,8 @@ import {
   QueryClient,
   dehydrate,
 } from '@tanstack/react-query'
-import { useHistoryOrder } from '@/hooks/query/useHistoryOrder'
+import { useOrderHistory } from '@/hooks/history/useHistoryService'
+import { ORDER_HISTORY_QUERY_KEYS } from '@/hooks/history/queries'
 
 export default async function OrderHistory({
   params,
@@ -15,8 +16,9 @@ export default async function OrderHistory({
   const parsedDate = parse(params.date, 'yyyyMMdd', new Date())
   const queryClient = new QueryClient()
   await queryClient.prefetchQuery({
-    queryKey: ['ORDER_HISTORY', params.date],
-    queryFn: () => useHistoryOrder(params.store_id, parsedDate),
+    queryKey: ORDER_HISTORY_QUERY_KEYS.all,
+    queryFn: () =>
+      useOrderHistory({ store_id: params.store_id, date: parsedDate }),
   })
 
   const dehydratedData = dehydrate(queryClient)

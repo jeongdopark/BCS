@@ -1,6 +1,4 @@
-'use client'
 import { client } from '@/utils/supabase'
-import { useQuery } from '@tanstack/react-query'
 
 export interface IOrder {
   takeout: boolean
@@ -26,13 +24,13 @@ export interface IDisplayOrder {
   count: number | null
 }
 
-const getDisplayOrder = async (store_id: string): Promise<IDisplayOrder> => {
-  return await client.from('display_order').select('*').eq('store_id', store_id)
+class DisplayOrderService {
+  async getDisplayOrder(store_id: string): Promise<IDisplayOrder> {
+    return await client
+      .from('display_order')
+      .select('*')
+      .eq('store_id', store_id)
+  }
 }
 
-export const useDisplayOrderQuery = (store_id: string) => {
-  return useQuery({
-    queryKey: ['DISPLAY_ORDER', store_id],
-    queryFn: () => getDisplayOrder(store_id),
-  })
-}
+export default new DisplayOrderService()
