@@ -4,7 +4,7 @@ import Modal from '../common/Modal'
 import { useState } from 'react'
 import CategoryForm from './CategoryForm'
 
-const Header = () => {
+const Header = ({ store_id }: { store_id: string }) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   return (
@@ -16,7 +16,11 @@ const Header = () => {
         title="카테고리 추가"
         trigger={<Button size="lg">추가</Button>}
         InnerComponent={
-          <CategoryForm setIsModalOpen={setIsModalOpen} mode="create" />
+          <CategoryForm
+            setIsModalOpen={setIsModalOpen}
+            mode="create"
+            store_id={store_id}
+          />
         }
       />
     </header>

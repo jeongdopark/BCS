@@ -69,6 +69,7 @@ const CategoryTable = ({
                       }
                       InnerComponent={
                         <CategoryForm
+                          store_id={store_id}
                           name={category.name}
                           id={category.id}
                           setIsModalOpen={setIsUpdateModalOpen}

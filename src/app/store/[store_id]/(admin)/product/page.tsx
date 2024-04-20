@@ -33,7 +33,7 @@ export default async function Product({
 
   return (
     <HydrationBoundary state={dehydratedData}>
-      <div className="w-[65%] mt-[60px] flex flex-col gap-5 ">
+      <div className="w-[80%] mt-[60px] flex flex-col gap-5 ">
         <Header store_id={params.store_id} />
         <Suspense fallback={<TableFallback />}>
           <ProductTable

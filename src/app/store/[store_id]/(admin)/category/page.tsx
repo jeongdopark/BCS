@@ -32,8 +32,8 @@ export default async function Category({
 
   return (
     <HydrationBoundary state={dehydratedData}>
-      <div className="w-[65%] mt-[60px] flex flex-col gap-5 ">
-        <Header />
+      <div className="w-[80%] mt-[60px] flex flex-col gap-5 ">
+        <Header store_id={params.store_id} />
         <Suspense fallback={<TableFallback />}>
           <CategoryTable
             current_page={Number(searchParams.page)}
