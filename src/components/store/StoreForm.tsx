@@ -47,7 +47,6 @@ const StoreForm = ({ setIsModalOpen }: IProp) => {
       { name: values.store, user_id: user.data.user.id },
       {
         onSuccess: () => {
-          console.log('Success')
           Toast({
             title: '추가 완료',
             description: values.store,
@@ -55,7 +54,6 @@ const StoreForm = ({ setIsModalOpen }: IProp) => {
           })
         },
         onError: (err) => {
-          console.log('Fail')
           Toast({
             title: '등록 실패',
             description: err.message,

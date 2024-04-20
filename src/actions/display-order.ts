@@ -38,6 +38,4 @@ export const createOrderDisplay = async ({
     .from('display_order')
     .insert([{ orders, status, store_id, takeout }])
     .select()
-
-  console.log(data, error)
 }

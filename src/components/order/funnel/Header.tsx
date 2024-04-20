@@ -14,8 +14,6 @@ const Header = ({
 }: {
   step: 'first' | 'takeout' | 'basket' | 'payment'
 }) => {
-  console.log(step)
-
   return (
     <div className="flex gap-3">
       <Bs1CircleFill />

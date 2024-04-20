@@ -34,9 +34,10 @@ interface IProp {
   setIsModalOpen: Dispatch<SetStateAction<boolean>>
   name?: string
   id?: number
+  store_id: string
 }
 
-const CategoryForm = ({ mode, name, id, setIsModalOpen }: IProp) => {
+const CategoryForm = ({ mode, name, id, setIsModalOpen, store_id }: IProp) => {
   const createCategory = useCreateCategory()
   const updateCategory = useCategoryUpdate()
 
@@ -54,11 +55,10 @@ const CategoryForm = ({ mode, name, id, setIsModalOpen }: IProp) => {
           {
             name: values.category,
             english_name: values.category_english,
-            store: 'cd6ca774-badc-491e-bedc-54e266da6d08',
+            store: store_id,
           },
           {
             onSuccess: () => {
-              console.log('Success')
               Toast({
                 title: '추가 완료',
                 description: values.category,
@@ -66,7 +66,6 @@ const CategoryForm = ({ mode, name, id, setIsModalOpen }: IProp) => {
               })
             },
             onError: (err) => {
-              console.log('Fail')
               Toast({
                 title: '등록 실패',
                 description: err.message,
@@ -81,7 +80,6 @@ const CategoryForm = ({ mode, name, id, setIsModalOpen }: IProp) => {
           { name: values.category, id: id! },
           {
             onSuccess: () => {
-              console.log('Success')
               Toast({
                 title: '추가 완료',
                 description: values.category,
@@ -89,7 +87,6 @@ const CategoryForm = ({ mode, name, id, setIsModalOpen }: IProp) => {
               })
             },
             onError: (err) => {
-              console.log('Fail')
               Toast({
                 title: '등록 실패',
                 description: err.message,

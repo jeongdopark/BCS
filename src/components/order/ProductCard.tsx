@@ -25,7 +25,7 @@ const ProductCard = ({
         <Badge className="flex justify-center w-[40px] text-[10px] bg-red-600">
           best
         </Badge>
-        <span className="text-sm">{product.price}</span>
+        <span className="text-sm">{product.price.toLocaleString()}원</span>
         <Button
           size="sm"
           onClick={() =>
