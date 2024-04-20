@@ -25,6 +25,12 @@ export default async function Order({
     queryKey: PRODUCT_QUERY_KEYS.recommend_product(),
     queryFn: () => ProductService.getRecommendProduct(params.store_id),
   })
+
+  await queryClient.prefetchQuery({
+    queryKey: PRODUCT_QUERY_KEYS.all,
+    queryFn: () => ProductService.allProducts(params.store_id),
+  })
+
   await queryClient.prefetchQuery({
     queryKey: PRODUCT_QUERY_KEYS.filter_by_category(searchParams.category),
     queryFn: () =>

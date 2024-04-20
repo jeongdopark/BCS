@@ -21,14 +21,14 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useCategories } from '@/hooks/category/useCategoryService'
-import { Dispatch, SetStateAction, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { client } from '@/utils/supabase'
 import { useCreateProduct } from '@/hooks/product/useProductService'
 import Toast from '../common/Toast'
 
 const formSchema = z.object({
-  name: z.string().min(2).max(50),
-  description: z.string().max(30),
+  name: z.string().min(2).max(20),
+  description: z.string().max(100),
   category: z.string().min(2),
   price: z
     .string()
@@ -41,8 +41,16 @@ const formSchema = z.object({
 
 const ProductForm = ({
   store_id,
+  product,
   setIsModalOpen,
+  name,
+  product_id,
+  mode,
 }: {
+  product?: any
+  mode: 'create' | 'update'
+  product_id?: string
+  name?: string
   store_id: string
   setIsModalOpen: Dispatch<SetStateAction<boolean>>
 }) => {
@@ -53,7 +61,10 @@ const ProductForm = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: '',
+      name: mode === 'update' ? product.name : '',
+      price: mode === 'update' ? product.price : '',
+      description: mode === 'update' ? product.description : '',
+      category: mode === 'update' ? product.category : '',
     },
   })
 
@@ -82,7 +93,6 @@ const ProductForm = ({
           },
           {
             onSuccess: () => {
-              console.log('success')
               Toast({
                 title: '상품 등록',
                 description: '상품 등록 완료',
@@ -96,6 +106,10 @@ const ProductForm = ({
     }
     createProductHandler()
   }
+
+  useEffect(() => {
+    if (mode === 'update') setPreview(product.image_src)
+  }, [])
   return (
     <>
       <Form {...form}>

@@ -50,6 +50,10 @@ export const useFilterByCategory = ({
   )
 }
 
+export const useAllProduct = (store_id: string) => {
+  return useSuspenseQuery(queryOptions.getAllProducts(store_id))
+}
+
 export const useCreateProduct = () => {
   const queryClient = useQueryClient()
   return useMutation({
@@ -73,6 +77,18 @@ export const useCreateProduct = () => {
       }),
     onSuccess: () => {
       return queryClient.invalidateQueries({ queryKey: PRODUCT_QUERY_KEYS.all })
+    },
+  })
+}
+
+export const useProductDelete = () => {
+  const queryClient = useQueryClient()
+  return useMutation({
+    mutationFn: (id: string) => ProductService.deleteProduct(id),
+    onSuccess: () => {
+      return queryClient.invalidateQueries({
+        queryKey: PRODUCT_QUERY_KEYS.all,
+      })
     },
   })
 }

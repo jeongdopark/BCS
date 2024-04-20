@@ -1,3 +1,4 @@
+'use client'
 import { Dispatch, SetStateAction, useState } from 'react'
 import Modal from '../common/Modal'
 import { DropdownMenuItem } from '../ui/dropdown-menu'

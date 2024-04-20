@@ -8,21 +8,16 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { BsThreeDots } from 'react-icons/bs'
-
+import { shortenWords } from '@/lib/utils'
 import { usePaginatedProducts } from '@/hooks/product/useProductService'
 import Image from 'next/image'
 import CustomPagination from '../common/Pagination'
 import { PAGINATION } from '@/constants/constant'
 import { Button } from '../ui/button'
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuItem,
-} from '../ui/dropdown-menu'
-import DeleteModal from './DeleteModal'
 import { useState } from 'react'
+import Modal from '../common/Modal'
+import ProductForm from './ProductForm'
+import { useProductDelete } from '@/hooks/product/useProductService'
 
 const ProductTable = ({
   current_page,
@@ -37,9 +32,10 @@ const ProductTable = ({
     store_id,
   })
 
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
-
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+  const [selectedtId, setSelectedId] = useState<string>()
+  const deleteProduct = useProductDelete()
   return (
     <>
       <Table>
@@ -59,39 +55,80 @@ const ProductTable = ({
             return (
               <TableRow key={product.id}>
                 <TableCell className="font-medium">
-                  <Image
-                    src={product.image_src}
-                    width={200}
-                    height={200}
-                    alt="product_image"
-                  />
+                  <div className="flex justify-center w-full">
+                    <Image
+                      src={product.image_src}
+                      width={200}
+                      height={200}
+                      alt="product_image"
+                    />
+                  </div>
                 </TableCell>
                 <TableCell className="text-center">{product.name}</TableCell>
-
                 <TableCell className="text-center">
                   {product.category.name}
                 </TableCell>
-                <TableCell className="text-center">{product.price}</TableCell>
                 <TableCell className="text-center">
-                  {product.description}
+                  {product.price.toLocaleString()}원
+                </TableCell>
+                <TableCell className="text-center">
+                  {shortenWords(product.description)}
                 </TableCell>
                 <TableCell className="text-right">
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button variant="ghost">
-                        <BsThreeDots />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                      <DropdownMenuItem>수정</DropdownMenuItem>
-                      <DeleteModal
-                        key={product.id}
-                        product={product}
-                        isDeleteModalOpen={isDeleteModalOpen}
-                        setIsDeleteModalOpen={setIsDeleteModalOpen}
-                      />
-                    </DropdownMenuContent>
-                  </DropdownMenu>
+                  <div className="flex gap-2 justify-end">
+                    <Modal
+                      open={isUpdateModalOpen && selectedtId === product.id}
+                      setOpen={setIsUpdateModalOpen}
+                      title="수정"
+                      trigger={
+                        <Button
+                          size="lg"
+                          onClick={() => setSelectedId(product.id)}
+                        >
+                          수정
+                        </Button>
+                      }
+                      InnerComponent={
+                        <ProductForm
+                          product={product}
+                          store_id={store_id}
+                          name={product.name}
+                          product_id={product.id}
+                          setIsModalOpen={setIsUpdateModalOpen}
+                          mode="update"
+                        />
+                      }
+                    />
+                    <Modal
+                      open={isDeleteModalOpen && selectedtId === product.id}
+                      setOpen={setIsDeleteModalOpen}
+                      title="삭제"
+                      trigger={
+                        <Button
+                          size="lg"
+                          onClick={() => setSelectedId(product.id)}
+                        >
+                          삭제
+                        </Button>
+                      }
+                      InnerComponent={
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <strong className="text-red-600">
+                              {product.name}
+                            </strong>
+                            상품을 삭제하시겠습니까 ?
+                          </div>
+                          <Button
+                            className="w-[120px]"
+                            onClick={() => deleteProduct.mutate(product.id)}
+                          >
+                            삭제
+                          </Button>
+                        </div>
+                      }
+                    />
+                  </div>
                 </TableCell>
               </TableRow>
             )

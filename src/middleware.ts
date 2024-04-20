@@ -1,15 +1,15 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { cookies } from 'next/headers'
+import { createMiddlewareClient } from '@supabase/auth-helpers-nextjs'
 
 export async function middleware(req: NextRequest) {
-  const cookieStore = cookies()
-  const isLogin = cookieStore.get(
-    `${process.env.NEXT_PUBLIC_SUPABASE_AUTH_COOKIE_KEY}`,
-  )
+  const res = NextResponse.next()
+  const supabase = createMiddlewareClient({ req, res })
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
 
-  // 로그인 안 된 상태
-  if (isLogin === undefined || isLogin.value === '') {
+  if (session === null) {
     if (req.nextUrl.pathname === '/signin') {
       return NextResponse.next()
     } else {

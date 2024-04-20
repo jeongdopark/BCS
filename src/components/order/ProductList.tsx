@@ -2,7 +2,11 @@
 
 import ProductCard from './ProductCard'
 import { IProduct } from '@/types/product'
-import { useFilterByCategory } from '@/hooks/product/useProductService'
+import {
+  useAllProduct,
+  useFilterByCategory,
+} from '@/hooks/product/useProductService'
+import { useState } from 'react'
 
 const ProductList = ({
   category,
@@ -11,20 +15,33 @@ const ProductList = ({
   category: string
   store_id: string
 }) => {
-  const { data: products } = useFilterByCategory({ category, store_id })
+  console.log(category)
+  const { data: filterdProducts } = useFilterByCategory({ category, store_id })
+  const { data: allProducts } = useAllProduct(store_id)
+  console.log(allProducts)
   return (
     <div className="flex flex-col w-[90%] gap-3">
       <strong>{category}</strong>
       <div className="grid grid-cols-2 gap-10 ">
-        {products?.map((product: IProduct) => {
-          return (
-            <ProductCard
-              product={product}
-              key={product.name}
-              store_id={store_id}
-            />
-          )
-        })}
+        {category
+          ? filterdProducts?.map((product: IProduct) => {
+              return (
+                <ProductCard
+                  product={product}
+                  key={product.name}
+                  store_id={store_id}
+                />
+              )
+            })
+          : allProducts?.map((product: IProduct) => {
+              return (
+                <ProductCard
+                  product={product}
+                  key={product.name}
+                  store_id={store_id}
+                />
+              )
+            })}
       </div>
     </div>
   )

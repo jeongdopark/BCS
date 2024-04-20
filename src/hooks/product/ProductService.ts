@@ -26,6 +26,14 @@ class ProductService {
       .insert([{ name, price, image_src, description, category, store, tag }])
   }
 
+  async allProducts(store_id: string) {
+    const { data } = await client
+      .from('products')
+      .select('*')
+      .eq('store', store_id)
+    return data
+  }
+
   async deleteProduct(product_id: string) {
     await client.from('products').delete().eq('id', product_id)
   }
@@ -38,7 +46,7 @@ class ProductService {
     data:
       | {
           name: string
-          id: number
+          id: string
           description: string
           image_src: string
           category: ICategory
@@ -84,7 +92,9 @@ class ProductService {
   }) {
     let { data: products } = await client
       .from('products')
-      .select(`*, category!inner(*)`)
+      .select(
+        `id, name, price,image_src, description, tag, options , store,category!inner(*)`,
+      )
       .eq('store', store_id)
       .eq('category.english_name', category)
     return products

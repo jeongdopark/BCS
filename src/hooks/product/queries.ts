@@ -13,6 +13,10 @@ export const PRODUCT_QUERY_KEYS = {
 }
 
 const queryOptions = {
+  getAllProducts: (store_id: string) => ({
+    queryKey: PRODUCT_QUERY_KEYS.all,
+    queryFn: () => ProductService.allProducts(store_id),
+  }),
   getPaginatedProducts: ({
     start,
     end,
