@@ -42,6 +42,7 @@ export const signin = async ({ email, password }: IArg) => {
     email,
     password,
   })
+  cookies().set({ name: 'user_id', value: data.user?.id!, httpOnly: true })
 
   return { data, error: error?.message }
 }
