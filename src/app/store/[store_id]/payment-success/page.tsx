@@ -8,6 +8,8 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { createOrderHistory } from '@/actions/order-history'
 import { createOrderDisplay } from '@/actions/display-order'
+import PaymentFallback from '@/components/fallback/PaymentFallback'
+import CheckCircleIcon from '@/components/fallback/CheckIcon'
 
 export default function Page({ params }: { params: { store_id: string } }) {
   const router = useRouter()
@@ -32,13 +34,13 @@ export default function Page({ params }: { params: { store_id: string } }) {
       })
 
       setTimeout(() => {
-        init_store()
         router.push(`/store/${params.store_id}/order`)
+        init_store()
       }, 3000)
     }
   }, [orders])
 
-  if (orders.length === 0) return <div>Loading...</div>
+  if (orders.length === 0) return <PaymentFallback />
 
   return (
     <div className="flex justify-center items-center w-full h-lvh">
@@ -92,25 +94,5 @@ export default function Page({ params }: { params: { store_id: string } }) {
         </div>
       </div>
     </div>
-  )
-}
-
-function CheckCircleIcon(props: any) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
-      <polyline points="22 4 12 14.01 9 11.01" />
-    </svg>
   )
 }

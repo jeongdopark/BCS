@@ -17,9 +17,9 @@ const Payment = ({
 }: {
   setStep: Dispatch<SetStateAction<'takeout' | 'basket' | 'payment'>>
 }) => {
-  const [paymentWidget, setPaymentWidget] = useState(null)
-  const paymentMethodsWidgetRef = useRef(null)
-  const price = useOrderStore((state) => state.total_amount)
+  const [paymentWidget, setPaymentWidget] = useState<any>(null)
+  const paymentMethodsWidgetRef = useRef<any>(null)
+  const price = useOrderStore((state: any) => state.total_amount)
 
   useEffect(() => {
     const fetchPaymentWidget = async () => {
