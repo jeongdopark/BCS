@@ -7,7 +7,7 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog'
 import { Button } from '../ui/button'
-import { IOrder } from '@/hooks/query/useHistoryOrder'
+import { IOrder } from '@/types/order'
 import BasketCard from '../order/funnel/BasketCard'
 
 interface IProps {
@@ -29,7 +29,7 @@ const OrderDetailModal = ({ orders, isTakeout, price, time }: IProps) => {
           <DialogDescription>
             <div className="flex flex-col gap-3">
               {orders.map((order) => {
-                return <BasketCard order={order} />
+                return <BasketCard order={order} key={order.uid} />
               })}
               {isTakeout ? <strong>포장</strong> : <strong>매장</strong>}
               <strong>결제 금액 : {price.toLocaleString()}원</strong>

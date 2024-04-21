@@ -9,16 +9,16 @@ const Basket = ({
 }: {
   setStep: Dispatch<SetStateAction<'takeout' | 'basket' | 'payment'>>
 }) => {
-  const orderList = useOrderStore((state) => state.orders)
-  const total_amount = useOrderStore((state) => state.total_amount)
+  const orderList = useOrderStore((state: any) => state.orders)
+  const total_amount = useOrderStore((state: any) => state.total_amount)
 
   return (
     <div className="flex flex-col items-center w-full justify-between overflow-scroll">
       <Header step="basket" />
       <div className="p-5 flex flex-col gap-3 w-full">
         <strong>주문 상품 확인</strong>
-        {orderList.map((order) => (
-          <BasketCard order={order} />
+        {orderList.map((order: any, idx: number) => (
+          <BasketCard key={idx} order={order} />
         ))}
         <strong>주문 금액 : {total_amount.toLocaleString()}원</strong>
       </div>

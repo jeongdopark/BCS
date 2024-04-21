@@ -1,5 +1,5 @@
 import { Checkbox } from '@/components/ui/checkbox'
-import { OptionSelectType, OptionBooleanType } from '@/types/product'
+import { OptionBooleanType } from '@/types/product'
 
 const CheckTypeOption = ({
   option,

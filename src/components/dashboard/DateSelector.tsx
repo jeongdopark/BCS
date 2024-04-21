@@ -36,7 +36,9 @@ const DateSeletor = ({ year, month }: { year: number; month: number }) => {
             {Array(12)
               .fill(0)
               .map((_, idx) => (
-                <SelectItem value={`${idx + 1}월`}>{idx + 1}월</SelectItem>
+                <SelectItem key={idx} value={`${idx + 1}월`}>
+                  {idx + 1}월
+                </SelectItem>
               ))}
           </SelectGroup>
         </SelectContent>

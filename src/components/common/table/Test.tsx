@@ -2,9 +2,7 @@ import { TableCell, TableRow, Table, TableHead, TableHeader } from './Table'
 import ProductService from '@/hooks/product/ProductService'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import Pagination from './Pagination'
 import { shortenWords } from '@/lib/utils'
-import CustomPagination from '../Pagination'
 
 const ProductTable = async () => {
   const { data } = await ProductService.getPaginatedProducts(
@@ -19,14 +17,14 @@ const ProductTable = async () => {
     <Table>
       <TableHeader>
         <TableRow>
-          {Header.map((header_name: string) => (
-            <TableHead>{header_name}</TableHead>
+          {Header.map((header_name: string, index: number) => (
+            <TableHead key={index}>{header_name}</TableHead>
           ))}
         </TableRow>
       </TableHeader>
       {data?.map((product) => {
         return (
-          <TableRow>
+          <TableRow key={product.id}>
             <TableCell className="font-medium w-[100px]">
               <div className="flex justify-center w-full">
                 <Image
@@ -56,7 +54,6 @@ const ProductTable = async () => {
           </TableRow>
         )
       })}
-      <CustomPagination />
     </Table>
   )
 }

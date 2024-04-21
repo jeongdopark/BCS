@@ -1,15 +1,6 @@
 import { ICategory } from '@/types/category'
 import { client } from '@/utils/supabase'
-
-interface IProduct {
-  name: string
-  category: string
-  price: number
-  description: string
-  image_src: string
-  store: string
-  tag: 'recommend'
-}
+import { IProduct, IProductCreate } from '@/types/product'
 
 class ProductService {
   async createProduct({
@@ -20,7 +11,7 @@ class ProductService {
     category,
     store,
     tag,
-  }: IProduct) {
+  }: IProductCreate) {
     await client
       .from('products')
       .insert([{ name, price, image_src, description, category, store, tag }])
@@ -66,12 +57,12 @@ class ProductService {
     return { data, count }
   }
 
-  async getProduct(id: string): Promise<IProduct[]> {
+  async getProduct(id: string): Promise<IProduct> {
     const { data } = await client
       .from('products')
       .select('*, options')
       .eq('id', id)
-    return data!
+    return data![0]
   }
 
   async getRecommendProduct(store_id: string) {

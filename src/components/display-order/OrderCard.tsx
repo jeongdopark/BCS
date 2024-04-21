@@ -2,9 +2,9 @@
 
 import { Card, CardContent } from '@/components/ui/card'
 import OrderCardHeader from './OrderCardHeader'
-import { IOrder } from '@/hooks/history/HistoryService'
+import { IDisplayOrder } from '@/types/order'
 
-const OrderCard = ({ order }: { order: IOrder }) => {
+const OrderCard = ({ order }: { order: IDisplayOrder }) => {
   return (
     <Card className="w-[25%]">
       <OrderCardHeader
@@ -23,7 +23,7 @@ const OrderCard = ({ order }: { order: IOrder }) => {
               <strong>{e.count}</strong>
               <strong className="ml-3">{e.product_name}</strong>
             </div>
-            {e.options.map((option) => (
+            {e.options?.map((option) => (
               <li key={option.name}>
                 {option.name} : {option.option}
               </li>

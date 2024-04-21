@@ -1,6 +1,6 @@
 'use client'
 
-import { IOrder } from '@/stores/order'
+import { IOrder } from '@/types/order'
 import Image from 'next/image'
 import { Badge } from '@/components/ui/badge'
 import { Card } from '@/components/ui/card'
@@ -20,7 +20,7 @@ const BasketCard = ({ order }: { order: IOrder }) => {
           <span className="text-sm">{order.count}개</span>
           <ul className="flex gap-1">
             {order.options!.map((order) => (
-              <li>
+              <li key={order.name}>
                 <Badge variant="outline">{order.option}</Badge>
               </li>
             ))}

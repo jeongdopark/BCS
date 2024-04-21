@@ -25,7 +25,10 @@ const RecommendList = async ({ store_id }: { store_id: string }) => {
         >
           <CarouselContent>
             {products?.map((product: IProduct, index) => (
-              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+              <CarouselItem
+                key={product.id}
+                className="md:basis-1/2 lg:basis-1/3"
+              >
                 <ProductCard
                   product={product}
                   key={index}

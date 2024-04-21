@@ -3,13 +3,14 @@
 import { TableCell, TableRow, TableBody, Table } from '@/components/ui/table'
 import { CardContent, CardFooter, Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { IOrder, useOrderStore } from '@/stores/order'
+import { useOrderStore } from '@/stores/order'
 import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { createOrderHistory } from '@/actions/order-history'
 import { createOrderDisplay } from '@/actions/display-order'
 import PaymentFallback from '@/components/fallback/PaymentFallback'
 import CheckCircleIcon from '@/components/fallback/CheckIcon'
+import { IOrder } from '@/types/order'
 
 export default function Page({ params }: { params: { store_id: string } }) {
   const router = useRouter()
@@ -38,6 +39,7 @@ export default function Page({ params }: { params: { store_id: string } }) {
         init_store()
       }, 3000)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [orders])
 
   if (orders.length === 0) return <PaymentFallback />
@@ -60,7 +62,7 @@ export default function Page({ params }: { params: { store_id: string } }) {
               <TableBody>
                 {orders.map((order: IOrder) => {
                   return (
-                    <TableRow>
+                    <TableRow key={order.uid}>
                       <TableCell className="flex justify-center p-4">
                         <div className="font-medium">{order.product_name}</div>
                       </TableCell>

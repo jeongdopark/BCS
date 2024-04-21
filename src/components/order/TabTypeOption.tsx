@@ -26,6 +26,7 @@ const TabTypeOption = ({
       <TabsList>
         {option.options.map((elem) => (
           <TabsTrigger
+            key={elem.name}
             value={JSON.stringify({ name: elem.name, price: elem.price })}
             onClick={() => {
               handleOptionChange({

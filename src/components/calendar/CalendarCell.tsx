@@ -2,7 +2,6 @@
 
 import { format } from 'date-fns'
 import { useOrderHistory } from '@/hooks/history/useHistoryService'
-import { useHistoryOrder } from '@/hooks/query/useHistoryOrder'
 import { useRouter } from 'next/navigation'
 
 const CalendarCell = ({

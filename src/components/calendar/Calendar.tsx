@@ -14,7 +14,6 @@ import {
   getMonth,
   isSunday,
 } from 'date-fns'
-import { History } from '@/app/store/[store_id]/(admin)/calendar/page'
 import TotalRevenue from './TotalRevenue'
 import Header from './Header'
 import { Button } from '@/components/ui/button'
@@ -80,8 +79,8 @@ const Calendar = ({ store_id }: { store_id: string }) => {
             <div className="flex h-full w-full flex-col gap-2 border-gray-200">
               {createMonth.map((week, i) => {
                 return (
-                  <div className="flex w-full h-full">
-                    <div key={`week${i}`} className="flex w-full">
+                  <div className="flex w-full h-full" key={`week${i}`}>
+                    <div className="flex w-full">
                       {week.map((v, j) => {
                         const isCurrentMonth =
                           getMonth(v) === getMonth(currentDate)
@@ -90,6 +89,7 @@ const Calendar = ({ store_id }: { store_id: string }) => {
                           format(new Date(), 'yyyyMMdd')
                         return (
                           <CalendarCell
+                            key={`${i}-${j}`}
                             store_id={store_id}
                             isCurrentMonth={isCurrentMonth}
                             isToday={isToday}

@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { FaAngleLeft } from 'react-icons/fa6'
 import { ORDER_STATUS } from '@/constants/constant'
 import React from 'react'
-import { IDisplayOrder } from '@/hooks/history/HistoryService'
+import { IDisplayOrder } from '@/types/order'
 import { useRouter } from 'next/navigation'
 import FallbackHeader from './skeleton/FallbackHeader'
 import InitModal from './InitModal'
@@ -13,31 +13,31 @@ const Header = ({
   orders,
   store_id,
 }: {
-  orders: IDisplayOrder | undefined
+  orders: IDisplayOrder[]
   store_id: string
 }) => {
   const router = useRouter()
 
-  if (orders === undefined) return <FallbackHeader />
+  if (!orders) return <FallbackHeader />
 
   const TAB_TRIGGER_ELEMS = [
     {
       value: 'receive',
       router: ORDER_STATUS.RECEIVE,
       title: '접수',
-      count: orders.data!.filter((order) => order.status === 'receive').length,
+      count: orders.filter((order) => order.status === 'receive').length,
     },
     {
       value: 'complete',
       router: ORDER_STATUS.COMPLETE,
       title: '완료',
-      count: orders.data!.filter((order) => order.status === 'complete').length,
+      count: orders.filter((order) => order.status === 'complete').length,
     },
     {
       value: 'cancel',
       router: ORDER_STATUS.CANCEL,
       title: '취소',
-      count: orders.data!.filter((order) => order.status === 'cancel').length,
+      count: orders.filter((order) => order.status === 'cancel').length,
     },
   ]
 

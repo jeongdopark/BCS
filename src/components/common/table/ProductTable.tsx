@@ -6,8 +6,6 @@ interface IProductContext {
   totalPage: number
 }
 
-const ProductContext = useContext<IProductContext | undefined>(undefined)
-
 const ProductTable = () => {
   const [currentPage, setCurrentPage] = useState(0)
   const totalPage = useRef(0)

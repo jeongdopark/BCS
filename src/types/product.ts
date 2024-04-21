@@ -19,13 +19,17 @@ export interface OptionBooleanType {
 }
 
 export interface IProduct {
-  id: string
+  id?: string
   name: string
   category: ICategory
   price: number
   description: string
   image_src: string
-  tag: 'recommend' | null
+  tag: 'recommend'
   options?: (OptionBooleanType | OptionSelectType)[]
   store: string
+}
+
+export type IProductCreate = Omit<IProduct, 'category'> & {
+  category: any
 }

@@ -1,22 +1,21 @@
 'use client'
 
-import { OrderStatus } from '@/types/display-order'
+import { OrderStatus } from '@/types/order'
 import OrderCard from './OrderCard'
-import { IDisplayOrder } from '@/hooks/history/HistoryService'
+import { IDisplayOrder } from '@/types/order'
 import { ORDER_DISPLAY_PAGINATION_SIZE } from '@/constants/constant'
 import FallbackOrderList from './skeleton/FallbackOrderCard'
 
 interface IProps {
   page: number
   status: OrderStatus
-  orders: IDisplayOrder | undefined
+  orders: IDisplayOrder[]
 }
 
 const OrderList = ({ page, status, orders }: IProps) => {
   if (!orders) return <FallbackOrderList />
-
   const filtered_orders = orders
-    .data!.filter((order) => {
+    .filter((order) => {
       return status === order.status
     })
     .slice(

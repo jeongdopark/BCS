@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { FaAngleLeft } from 'react-icons/fa6'
 import { FaAngleRight } from 'react-icons/fa6'
-import { OrderStatus } from '@/types/display-order'
+import { OrderStatus } from '@/types/order'
 
 interface IProp {
   page: number

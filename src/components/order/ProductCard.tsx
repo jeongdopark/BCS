@@ -2,7 +2,7 @@
 
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { IProduct } from '@/types/product'
+import { IProductCreate } from '@/types/product'
 import { Button } from '../ui/button'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
@@ -11,7 +11,7 @@ const ProductCard = ({
   product,
   store_id,
 }: {
-  product: IProduct
+  product: IProductCreate
   store_id: string
 }) => {
   const router = useRouter()

@@ -5,16 +5,7 @@ import {
 } from '@tanstack/react-query'
 import ProductService from './ProductService'
 import queryOptions, { PRODUCT_QUERY_KEYS } from './queries'
-
-interface IProduct {
-  name: string
-  category: string
-  price: number
-  description: string
-  image_src: string
-  store: string
-  tag: 'recommend'
-}
+import { IProductCreate } from '@/types/product'
 
 export const useProduct = (product_id: string) => {
   return useSuspenseQuery(queryOptions.getProduct(product_id))
@@ -65,7 +56,7 @@ export const useCreateProduct = () => {
       category,
       store,
       tag,
-    }: IProduct) =>
+    }: IProductCreate) =>
       ProductService.createProduct({
         name,
         price,

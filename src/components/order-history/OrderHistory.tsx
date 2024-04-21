@@ -79,7 +79,7 @@ const OrderHistoryDetail = ({
         <TableBody>
           {history_order?.map((order) => {
             return (
-              <TableRow>
+              <TableRow key={order.id}>
                 <TableCell className="font-medium">{order.id}</TableCell>
                 <TableCell>{order.price}</TableCell>
                 <TableCell>

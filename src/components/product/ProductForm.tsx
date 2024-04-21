@@ -85,7 +85,7 @@ const ProductForm = ({
           {
             name: values.name,
             price: values.price,
-            image_src: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${data.fullPath}`,
+            image_src: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${data.path}`,
             description: values.description,
             category: values.category,
             store: store_id,
@@ -109,6 +109,7 @@ const ProductForm = ({
 
   useEffect(() => {
     if (mode === 'update') setPreview(product.image_src)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (
     <>
@@ -145,7 +146,7 @@ const ProductForm = ({
                   <SelectContent>
                     {categories!.map((category) => {
                       return (
-                        <SelectItem value={category.id}>
+                        <SelectItem key={category.id} value={category.id}>
                           {category.name}
                         </SelectItem>
                       )

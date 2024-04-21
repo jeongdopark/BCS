@@ -7,7 +7,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import useCreateCategory from '@/hooks/mutation/useCreateCategory'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Dispatch, SetStateAction } from 'react'
 import { Input } from '@/components/ui/input'
@@ -15,7 +14,7 @@ import { useForm } from 'react-hook-form'
 import { Button } from '../ui/button'
 import { z } from 'zod'
 import Toast from '../common/Toast'
-import useCreateStore from '@/hooks/mutation/useCreateStore'
+import { useCreateStore } from '@/hooks/store/useStoreService'
 import useStore from '@/stores/useStore'
 import { useUserStore } from '@/stores/user'
 

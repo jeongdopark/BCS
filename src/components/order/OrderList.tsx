@@ -1,5 +1,6 @@
 'use client'
-import { IOrder, useOrderStore } from '@/stores/order'
+import { useOrderStore } from '@/stores/order'
+import { IOrder } from '@/types/order'
 import { Button } from '../ui/button'
 import OrderCard from './OrderCard'
 import { useRouter } from 'next/navigation'
@@ -23,7 +24,9 @@ const OrderList = ({ store_id }: { store_id: string }) => {
             주문할 상품을 선택해 주세요.
           </div>
         ) : (
-          orderList.map((order: IOrder) => <OrderCard order={order} />)
+          orderList.map((order: IOrder) => (
+            <OrderCard key={order.uid} order={order} />
+          ))
         )}
       </section>
       <div className=" flex flex-col gap-5 p-5 border-t-[1px]">

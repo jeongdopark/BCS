@@ -1,5 +1,5 @@
 'use client'
-import { OrderStatus } from '@/types/display-order'
+import { OrderStatus } from '@/types/order'
 import Header from '@/components/display-order/Header'
 import OrderList from '@/components/display-order/OrderList'
 import PageController from '@/components/display-order/PageController'
@@ -32,9 +32,8 @@ export default function DisplayOrderPage({
         (payload) => {
           setTotalPage(
             Math.ceil(
-              orders!.data!.filter(
-                (order) => order.status === searchParams.status,
-              ).length / 5,
+              orders!.filter((order) => order.status === searchParams.status)
+                .length / 5,
             ),
           )
           refetch()
@@ -44,7 +43,7 @@ export default function DisplayOrderPage({
     if (orders) {
       setTotalPage(
         Math.ceil(
-          orders!.data!.filter((order) => order.status === searchParams.status)
+          orders.filter((order) => order.status === searchParams.status)
             .length / ORDER_DISPLAY_PAGINATION_SIZE,
         ),
       )
@@ -53,15 +52,16 @@ export default function DisplayOrderPage({
     return () => {
       client.removeChannel(channel)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [orders])
 
   return (
     <div className="relative h-lvh">
-      <Header orders={orders} store_id={params.store_id} />
+      <Header orders={orders!} store_id={params.store_id} />
       <OrderList
         page={Number(page)}
         status={searchParams.status}
-        orders={orders}
+        orders={orders!}
       />
       <PageController
         page={Number(page)}

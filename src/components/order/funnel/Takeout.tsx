@@ -13,8 +13,8 @@ const Takeout = ({
   setStep: Dispatch<SetStateAction<'takeout' | 'basket' | 'payment'>>
 }) => {
   const router = useRouter()
-  const takeoutHandler = useOrderStore((state) => state.takeoutHandler)
-  const _isTakeout = useOrderStore((state) => state.isTakeout)
+  const takeoutHandler = useOrderStore((state: any) => state.takeoutHandler)
+  const _isTakeout = useOrderStore((state: any) => state.isTakeout)
 
   return (
     <div className="flex flex-col gap-5 items-center justify-between">

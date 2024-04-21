@@ -24,11 +24,12 @@ const ProductModal = ({ id }: IProps) => {
   const addOrder = useOrderStore((state: any) => state.addOrder)
   const addAmount = useOrderStore((state: any) => state.addAmount)
   const { data } = useProduct(id)
+  console.log(data)
   const router = useRouter()
-  const PRODUCT_PRICE = useRef(data[0].price)
+  const PRODUCT_PRICE = useRef(data.price)
   const UID = Math.random() * 1000
   const [count, setCount] = useState(1)
-  const [price, setPrice] = useState(data[0].price)
+  const [price, setPrice] = useState(data.price)
   const [selectedOptions, setSelectedOptions] = useState<seletedOption[]>([])
 
   const isExistOption = (seletedOptions: seletedOption[], name: string) => {
@@ -90,10 +91,10 @@ const ProductModal = ({ id }: IProps) => {
       <DialogContent className="sm:max-w-md">
         <div className="flex gap-5">
           <div className="rounded-md relative w-[100px] h-[100px] overflow-hidden">
-            <Image src={data[0].image_src} fill alt="product" />
+            <Image src={data.image_src} fill alt="product" />
           </div>
           <div className="flex flex-col gap-1">
-            <strong>{data[0].name}</strong>
+            <strong>{data.name}</strong>
             <strong>{price.toLocaleString()}원</strong>
             <div className="flex items-center gap-3">
               <Button
@@ -121,9 +122,9 @@ const ProductModal = ({ id }: IProps) => {
             </div>
           </div>
         </div>
-        <div>{data[0].description}</div>
-        {data[0].options &&
-          data[0].options.map((option) => {
+        <div>{data.description}</div>
+        {data.options &&
+          data.options.map((option) => {
             return (
               <div key={option.name}>
                 <strong>{option.name}</strong>
@@ -159,11 +160,11 @@ const ProductModal = ({ id }: IProps) => {
                 addOrder({
                   price,
                   count,
-                  product_id: data[0].id,
-                  product_name: data[0].name,
+                  product_id: data.id,
+                  product_name: data.name,
                   uid: UID,
                   options: selectedOptions,
-                  img_url: data[0].image_src,
+                  img_url: data.image_src,
                 })
                 addAmount(price)
                 router.back()

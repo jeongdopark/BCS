@@ -1,21 +1,6 @@
 import { client } from '@/utils/supabase'
-export interface IOrder {
-  price: number
-  count: number
-  product_id: string
-  product_name: string
-  uid: number
-  takeout: boolean
-}
+import { IHistoryOrder } from '@/types/order'
 
-interface IHistoryOrder {
-  id: string
-  price: number
-  takeout: boolean
-  store_id: string
-  created_at: Date
-  orders: IOrder[]
-}
 class HistoryOrderService {
   async getHistoryOrder({
     store_id,
