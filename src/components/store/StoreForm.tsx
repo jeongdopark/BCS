@@ -22,6 +22,9 @@ const formSchema = z.object({
   store: z.string().min(2, {
     message: '카테고리 입력해 주세요.',
   }),
+  client_key: z.string().min(2, {
+    message: '결제 클라이언트 키를 입력해 주세요.'
+  })
 })
 
 interface IProp {
@@ -38,12 +41,13 @@ const StoreForm = ({ setIsModalOpen }: IProp) => {
     resolver: zodResolver(formSchema),
     defaultValues: {
       store: '',
+      client_key : '',
     },
   })
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     createStore.mutate(
-      { name: values.store, user_id: user.data.user.id },
+      { name: values.store, user_id: user.data.user.id, toss_client_key: values.client_key },
       {
         onSuccess: () => {
           Toast({
@@ -72,9 +76,22 @@ const StoreForm = ({ setIsModalOpen }: IProp) => {
           name="store"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>매장 등록</FormLabel>
+              <FormLabel>매장명</FormLabel>
               <FormControl>
                 <Input placeholder="매장명을 입력해 주세요." {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="client_key"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>결제 클라이언트 키</FormLabel>
+              <FormControl>
+                <Input placeholder="결제 클라이언트 키를 입력해 주세요." {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

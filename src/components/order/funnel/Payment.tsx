@@ -1,31 +1,35 @@
 'use client'
 import { Dispatch, SetStateAction } from 'react'
 import React, { useEffect, useRef, useState } from 'react'
-import { loadPaymentWidget, ANONYMOUS } from '@tosspayments/payment-widget-sdk'
+import { loadPaymentWidget } from '@tosspayments/payment-widget-sdk'
 import { nanoid } from 'nanoid'
 import { Button } from '@/components/ui/button'
 import { useOrderStore } from '@/stores/order'
 import Header from './Header'
+import { useStoreInfo } from '@/hooks/store/useStoreService'
 // 구매자의 고유 아이디를 불러와서 customerKey로 설정하세요.
-// 이메일・전화번호와 같이 유추가 가능한 값은 안전하지 않습니다.
-const widgetClientKey = 'test_ck_BX7zk2yd8yn7aR5oJMvq3x9POLqK'
+// 이메일・전화번호와 같이 유추가 가능한 값은 안전하지 않습니다
 const customerKey = 'HWtu1OlOWKvNlyZD2T5sX'
 // const paymentWidget = PaymentWidget(widgetClientKey, PaymentWidget.ANONYMOUS) // 비회원 결제
 
 const Payment = ({
   setStep,
+  store_id
 }: {
   setStep: Dispatch<SetStateAction<'takeout' | 'basket' | 'payment'>>
+  store_id: string
 }) => {
   const [paymentWidget, setPaymentWidget] = useState<any>(null)
   const paymentMethodsWidgetRef = useRef<any>(null)
   const price = useOrderStore((state: any) => state.total_amount)
-
+  const { data, isPending } = useStoreInfo(store_id)
+  
   useEffect(() => {
+    
     const fetchPaymentWidget = async () => {
       try {
         const loadedWidget = await loadPaymentWidget(
-          widgetClientKey,
+          data![0].toss_client_key,
           customerKey,
         )
         setPaymentWidget(loadedWidget)
@@ -33,9 +37,10 @@ const Payment = ({
         console.error('Error fetching payment widget:', error)
       }
     }
-
+    if(!isPending){
     fetchPaymentWidget()
-  }, [])
+    }
+  }, [isPending])
 
   useEffect(() => {
     if (paymentWidget == null) {
@@ -73,7 +78,7 @@ const Payment = ({
         customerName: '김토스',
         customerEmail: 'customer123@gmail.com',
         customerMobilePhone: '01012341234',
-        successUrl: `${window.location.origin}/store/cd6ca774-badc-491e-bedc-54e266da6d08/payment-success`,
+        successUrl: `${window.location.origin}/store/${store_id}/payment-success`,
         failUrl: `${window.location.origin}/fail`,
       })
     } catch (error) {
