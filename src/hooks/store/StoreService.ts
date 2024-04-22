@@ -6,7 +6,7 @@ class HistoryOrderService {
     const { data, error } = await client
       .from('store')
       .select()
-      .eq('user_id', user_id!.value)
+      .eq('user_id', user_id?.value)
 
     if (error) {
       console.error('Error fetching categories:', error)

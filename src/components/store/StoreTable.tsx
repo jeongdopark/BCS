@@ -12,11 +12,13 @@ import { Button } from '../ui/button'
 import { IoSettingsSharp } from 'react-icons/io5'
 import { useRouter } from 'next/navigation'
 import { useStore } from '@/hooks/store/useStoreService'
+import StoreManagementFallback from '../fallback/StoreManagementFallback'
 
 const StoreTable = () => {
   const router = useRouter()
   const { data: stores } = useStore()
 
+  if(!stores) return <StoreManagementFallback/>
   return (
     <Table>
       {stores.length === 0 && (

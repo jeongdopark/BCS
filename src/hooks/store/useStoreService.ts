@@ -1,13 +1,13 @@
 import {
   useMutation,
+  useQuery,
   useQueryClient,
-  useSuspenseQuery,
 } from '@tanstack/react-query'
 import { STORE_QUERY_KEYS, storeQueryOptions } from './queries'
 import StoreService from './StoreService'
 
 export const useStore = () => {
-  return useSuspenseQuery(storeQueryOptions.all())
+  return useQuery(storeQueryOptions.all())
 }
 
 export const useCreateStore = () => {
