@@ -4,7 +4,6 @@ import { client } from '@/utils/supabase'
 import { redirect } from 'next/navigation'
 import { cookies } from 'next/headers'
 import {
-  createClientComponentClient,
   createServerActionClient,
 } from '@supabase/auth-helpers-nextjs'
 interface IArg {

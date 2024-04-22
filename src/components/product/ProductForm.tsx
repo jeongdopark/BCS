@@ -85,7 +85,7 @@ const ProductForm = ({
           {
             name: values.name,
             price: values.price,
-            image_src: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/${data.path}`,
+            image_src: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/BCS/${data.path}`,
             description: values.description,
             category: values.category,
             store: store_id,

@@ -31,7 +31,7 @@ const ProductTable = ({
     end: current_page * PAGINATION.PRODUCT - 1,
     store_id,
   })
-
+  
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [selectedtId, setSelectedId] = useState<string>()
@@ -58,8 +58,8 @@ const ProductTable = ({
                   <div className="flex justify-center w-full">
                     <Image
                       src={product.image_src}
-                      width={200}
-                      height={200}
+                      width={90}
+                      height={90}
                       alt="product_image"
                     />
                   </div>

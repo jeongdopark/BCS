@@ -68,25 +68,6 @@ function LayoutDashboardIcon(props: any) {
   )
 }
 
-function MountainIcon(props: any) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
-    </svg>
-  )
-}
-
 function PackageIcon(props: any) {
   return (
     <svg
@@ -160,7 +141,7 @@ export default async function Layout({
   const MENU = [
     {
       url: `/store/${params.store_id}/calendar`,
-      name: '매출 달력',
+      name: '매출달력',
       icon: <CalendarIcon className="h-4 w-4" />,
     },
     {
@@ -170,7 +151,7 @@ export default async function Layout({
     },
     {
       url: `/store/${params.store_id}/product?page=1`,
-      name: '상품 관리',
+      name: '상품관리',
       icon: <PackageIcon className="h-4 w-4" />,
     },
     {
@@ -180,12 +161,17 @@ export default async function Layout({
     },
     {
       url: `/store/${params.store_id}/display-order?status=receive&page=1`,
-      name: '주문 현황',
+      name: '주문현황',
       icon: <ShoppingCartIcon className="h-4 w-4" />,
     },
     {
       url: `/store/${params.store_id}/order`,
-      name: '주문 페이지',
+      name: '주문페이지',
+      icon: <FileTextIcon className="h-4 w-4" />,
+    },
+    {
+      url: `/store-management`,
+      name: '매장관리',
       icon: <FileTextIcon className="h-4 w-4" />,
     },
   ]
