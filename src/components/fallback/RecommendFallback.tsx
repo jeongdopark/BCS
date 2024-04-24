@@ -21,13 +21,10 @@ const RecommendFallback = () => {
           className="w-full"
         >
           <CarouselContent>
-            <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+            <CarouselItem className="md:basis-1/2 lg:basis-1/2">
               <Skeleton className="h-[126px] w-full rounded-xl" />
             </CarouselItem>
-            <CarouselItem className="md:basis-1/2 lg:basis-1/3">
-              <Skeleton className="h-[126px] w-full rounded-xl" />
-            </CarouselItem>
-            <CarouselItem className="md:basis-1/2 lg:basis-1/3">
+            <CarouselItem className="md:basis-1/2 lg:basis-1/2">
               <Skeleton className="h-[126px] w-full rounded-xl" />
             </CarouselItem>
           </CarouselContent>

@@ -21,7 +21,7 @@ import { Dispatch, SetStateAction } from 'react'
 import { Button } from '../ui/button'
 
 const formSchema = z.object({
-  category: z.string().min(2, {
+  category: z.string().min(1, {
     message: '카테고리 입력해 주세요.',
   }),
   category_english: z.string().min(2, {
