@@ -24,7 +24,6 @@ const ProductModal = ({ id }: IProps) => {
   const addOrder = useOrderStore((state: any) => state.addOrder)
   const addAmount = useOrderStore((state: any) => state.addAmount)
   const { data } = useProduct(id)
-  console.log(data)
   const router = useRouter()
   const PRODUCT_PRICE = useRef(data.price)
   const UID = Math.random() * 1000

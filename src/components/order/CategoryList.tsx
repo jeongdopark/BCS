@@ -9,7 +9,7 @@ const CategoryList = ({ store_id }: { store_id: string }) => {
   const router = useRouter()
 
   return (
-    <div className="w-[200px] min-h-lvh flex justify-center p-3 border-r-[1px]">
+    <div className="w-[200px] min-h-lvh flex p-3 border-r-[1px] flex-col justify-between">
       <ul className="flex flex-col gap-3 mt-5">
         <strong>카테고리</strong>
         {categories?.map((category: ICategory) => {
@@ -24,6 +24,13 @@ const CategoryList = ({ store_id }: { store_id: string }) => {
           )
         })}
       </ul>
+      <Button
+        variant="destructive"
+        size="lg"
+        onClick={() => router.push(`/store/${store_id}/calendar`)}
+      >
+        관리자 페이지
+      </Button>
     </div>
   )
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import ProductCard from './ProductCard'
-import { IProduct, IProductCreate } from '@/types/product'
+import { IProductCreate } from '@/types/product'
 import {
   useAllProduct,
   useFilterByCategory,
@@ -16,7 +16,6 @@ const ProductList = ({
 }) => {
   const { data: filterdProducts } = useFilterByCategory({ category, store_id })
   const { data: allProducts } = useAllProduct(store_id)
-
   return (
     <div className="flex flex-col w-[90%] gap-3">
       <strong>{category}</strong>

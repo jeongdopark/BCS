@@ -18,6 +18,7 @@ const OrderList = ({ page, status, orders }: IProps) => {
     .filter((order) => {
       return status === order.status
     })
+    .reverse()
     .slice(
       (page - 1) * ORDER_DISPLAY_PAGINATION_SIZE,
       page * ORDER_DISPLAY_PAGINATION_SIZE,

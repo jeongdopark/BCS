@@ -18,7 +18,7 @@ const StoreTable = () => {
   const router = useRouter()
   const { data: stores } = useStore()
 
-  if(!stores) return <StoreManagementFallback/>
+  if (!stores) return <StoreManagementFallback />
   return (
     <Table>
       {stores.length === 0 && (
@@ -27,7 +27,6 @@ const StoreTable = () => {
       <TableHeader>
         <TableRow>
           <TableHead>매장명</TableHead>
-          <TableHead>위치</TableHead>
           <TableHead className="text-right"></TableHead>
         </TableRow>
       </TableHeader>
@@ -36,7 +35,6 @@ const StoreTable = () => {
           return (
             <TableRow key={store.store_id}>
               <TableCell className="font-medium">{store.name}</TableCell>
-              <TableCell>Credit Card</TableCell>
               <TableCell className="text-right">
                 <div className="flex justify-end gap-2">
                   <Button
