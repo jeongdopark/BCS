@@ -109,27 +109,10 @@ export default function Signin() {
       <div className="flex gap-4 justify-start flex-col mt-4">
         <Link href="signup">
           <Button className="mb-4 w-full">
-            회원가입 페이지
+            회원가입
             <GoChevronRight />{' '}
           </Button>
         </Link>
-      </div>
-      <div className="relative mb-4">
-        <div aria-hidden="true" className="absolute inset-0 flex items-center">
-          <div className="w-full border-t border-gray-300" />
-        </div>
-        <div className="relative flex justify-center text-sm">
-          <span className="bg-white px-2 text-gray-500">간편 로그인</span>
-        </div>
-      </div>
-      <div className="flex gap-4  justify-start">
-        <Button
-          className="flex flex-1 justify-center"
-          onClick={() => signInWithKakao()}
-        >
-          Kakao
-        </Button>
-        <Button className="flex flex-1 justify-center">Google</Button>
       </div>
     </div>
   )
