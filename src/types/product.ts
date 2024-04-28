@@ -28,6 +28,13 @@ export interface IProduct {
   tag: 'recommend'
   options?: (OptionBooleanType | OptionSelectType)[]
   store: string
+  is_display: boolean
+  is_sold_out: boolean
+}
+
+export interface IPaginationProduct {
+  count: number
+  data: IProduct[]
 }
 
 export type IProductCreate = Omit<IProduct, 'category'> & {
