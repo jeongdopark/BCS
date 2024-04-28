@@ -1,78 +1,81 @@
 'use client'
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { shortenWords } from '@/lib/utils'
 import { usePaginatedProducts } from '@/hooks/product/useProductService'
 import Image from 'next/image'
-import CustomPagination from '../common/Pagination'
 import { PAGINATION } from '@/constants/constant'
 import { Button } from '../ui/button'
 import { useState } from 'react'
 import Modal from '../common/Modal'
 import ProductForm from './ProductForm'
 import { useProductDelete } from '@/hooks/product/useProductService'
+import { useUpdateProductDisplay, useUpdateProductSoldOut } from '@/hooks/product/useProductService'
+import Pagination from '../common/Pagination'
+import Toggle from '../common/Toggle'
 
-const ProductTable = ({
-  current_page,
-  store_id,
-}: {
-  current_page: number
-  store_id: string
-}) => {
-  const { data } = usePaginatedProducts({
-    start: (current_page - 1) * PAGINATION.PRODUCT,
-    end: current_page * PAGINATION.PRODUCT - 1,
-    store_id,
-  })
-  
+const ProductTable = ({ current_page, store_id }: { current_page: number; store_id: string }) => {
+  const {
+    data: { data, count },
+  } = usePaginatedProducts({ start: (current_page - 1) * PAGINATION.PRODUCT, end: current_page * PAGINATION.PRODUCT - 1, store_id })
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false)
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
   const [selectedtId, setSelectedId] = useState<string>()
   const deleteProduct = useProductDelete()
+  const updateProductSoldOut = useUpdateProductSoldOut()
+  const updateProductDisplay = useUpdateProductDisplay()
+  const HEADER_ELEMENT = ['이미지', '상품명', '카테고리', '가격', '설명', '품절', '숨기기', '']
+  if (data === undefined) return <div>Loading...</div>
   return (
-    <>
+    <div className="flex flex-col gap-3">
       <Table>
-        {data.data!.length === 0 && <TableCaption>No Result</TableCaption>}
+        {data!.length === 0 && <TableCaption>No Result</TableCaption>}
         <TableHeader>
           <TableRow>
-            <TableHead className="w-[100px] text-center">이미지</TableHead>
-            <TableHead className="text-center">상품명</TableHead>
-            <TableHead className="text-center">카테고리</TableHead>
-            <TableHead className="text-center">가격</TableHead>
-            <TableHead className="text-center">설명</TableHead>
-            <TableHead className="text-right"></TableHead>
+            {HEADER_ELEMENT.map((header) => (
+              <TableHead className="text-center">{header}</TableHead>
+            ))}
           </TableRow>
         </TableHeader>
         <TableBody>
-          {data.data!.map((product) => {
+          {data!.map((product) => {
             return (
               <TableRow key={product.id}>
                 <TableCell className="font-medium">
                   <div className="flex justify-center w-full">
-                    <Image
-                      src={product.image_src}
-                      width={90}
-                      height={90}
-                      alt="product_image"
-                    />
+                    <Image src={product.image_src} width={90} height={90} alt="product_image" />
                   </div>
                 </TableCell>
                 <TableCell className="text-center">{product.name}</TableCell>
+                <TableCell className="text-center">{product.category.name}</TableCell>
+                <TableCell className="text-center">{product.price.toLocaleString()}원</TableCell>
+                <TableCell className="text-center">{shortenWords(product.description)}</TableCell>
                 <TableCell className="text-center">
-                  {product.category.name}
+                  <div className="flex justify-center">
+                    <Toggle
+                      status={product.is_sold_out}
+                      onCheckedHandler={() =>
+                        updateProductSoldOut.mutate({
+                          product_id: product.id,
+                          current_status: product.is_sold_out,
+                          page: (current_page - 1) * PAGINATION.PRODUCT,
+                        })
+                      }
+                    />
+                  </div>
                 </TableCell>
                 <TableCell className="text-center">
-                  {product.price.toLocaleString()}원
-                </TableCell>
-                <TableCell className="text-center">
-                  {shortenWords(product.description)}
+                  <div className="flex justify-center">
+                    <Toggle
+                      status={product.is_display}
+                      onCheckedHandler={() =>
+                        updateProductDisplay.mutate({
+                          product_id: product.id,
+                          current_status: product.is_display,
+                          page: (current_page - 1) * PAGINATION.PRODUCT,
+                        })
+                      }
+                    />
+                  </div>
                 </TableCell>
                 <TableCell className="text-right">
                   <div className="flex gap-2 justify-end">
@@ -81,10 +84,7 @@ const ProductTable = ({
                       setOpen={setIsUpdateModalOpen}
                       title="수정"
                       trigger={
-                        <Button
-                          size="lg"
-                          onClick={() => setSelectedId(product.id)}
-                        >
+                        <Button size="sm" onClick={() => setSelectedId(product.id)}>
                           수정
                         </Button>
                       }
@@ -104,25 +104,17 @@ const ProductTable = ({
                       setOpen={setIsDeleteModalOpen}
                       title="삭제"
                       trigger={
-                        <Button
-                          size="lg"
-                          onClick={() => setSelectedId(product.id)}
-                        >
+                        <Button size="sm" onClick={() => setSelectedId(product.id)}>
                           삭제
                         </Button>
                       }
                       InnerComponent={
                         <div className="flex items-center justify-between">
                           <div>
-                            <strong className="text-red-600">
-                              {product.name}
-                            </strong>
+                            <strong className="text-red-600">{product.name}</strong>
                             상품을 삭제하시겠습니까 ?
                           </div>
-                          <Button
-                            className="w-[120px]"
-                            onClick={() => deleteProduct.mutate(product.id)}
-                          >
+                          <Button className="w-[120px]" onClick={() => deleteProduct.mutate(product.id)}>
                             삭제
                           </Button>
                         </div>
@@ -135,11 +127,8 @@ const ProductTable = ({
           })}
         </TableBody>
       </Table>
-      <CustomPagination
-        current_page={current_page}
-        total_page={Math.ceil(data.count! / PAGINATION.PRODUCT)}
-      />
-    </>
+      <Pagination current_page={current_page} total_page={Math.ceil(count! / PAGINATION.PRODUCT)} />
+    </div>
   )
 }
 

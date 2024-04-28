@@ -1,33 +1,15 @@
 'use client'
 
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table'
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 import { Button } from '../ui/button'
 import { useState } from 'react'
 import Modal from '../common/Modal'
 import CategoryForm from './CategoryForm'
-import CustomPagination from '../common/Pagination'
-
+import Pagination from '../common/Pagination'
 import { PAGINATION } from '@/constants/constant'
-import {
-  useCategoryDelete,
-  usePaginatedCategories,
-} from '@/hooks/category/useCategoryService'
+import { useCategoryDelete, usePaginatedCategories } from '@/hooks/category/useCategoryService'
 
-const CategoryTable = ({
-  current_page,
-  store_id,
-}: {
-  current_page: number
-  store_id: string
-}) => {
+const CategoryTable = ({ current_page, store_id }: { current_page: number; store_id: string }) => {
   const { data } = usePaginatedCategories({
     start: (current_page - 1) * 5,
     end: current_page * 5 - 1,
@@ -60,21 +42,12 @@ const CategoryTable = ({
                       setOpen={setIsUpdateModalOpen}
                       title="수정"
                       trigger={
-                        <Button
-                          size="lg"
-                          onClick={() => setSelectedId(category.id)}
-                        >
+                        <Button size="lg" onClick={() => setSelectedId(category.id)}>
                           수정
                         </Button>
                       }
                       InnerComponent={
-                        <CategoryForm
-                          store_id={store_id}
-                          name={category.name}
-                          id={category.id}
-                          setIsModalOpen={setIsUpdateModalOpen}
-                          mode="update"
-                        />
+                        <CategoryForm store_id={store_id} name={category.name} id={category.id} setIsModalOpen={setIsUpdateModalOpen} mode="update" />
                       }
                     />
                     <Modal
@@ -82,25 +55,17 @@ const CategoryTable = ({
                       setOpen={setIsDeleteModalOpen}
                       title="삭제"
                       trigger={
-                        <Button
-                          size="lg"
-                          onClick={() => setSelectedId(category.id)}
-                        >
+                        <Button size="lg" onClick={() => setSelectedId(category.id)}>
                           삭제
                         </Button>
                       }
                       InnerComponent={
                         <div className="flex items-center justify-between">
                           <div>
-                            <strong className="text-red-600">
-                              {category.name}
-                            </strong>
+                            <strong className="text-red-600">{category.name}</strong>
                             카테고리 삭제하시겠습니까 ?
                           </div>
-                          <Button
-                            className="w-[120px]"
-                            onClick={() => deleteCategory.mutate(category.id)}
-                          >
+                          <Button className="w-[120px]" onClick={() => deleteCategory.mutate(category.id)}>
                             삭제
                           </Button>
                         </div>
@@ -113,10 +78,7 @@ const CategoryTable = ({
           })}
         </TableBody>
       </Table>
-      <CustomPagination
-        current_page={current_page}
-        total_page={Math.ceil(data.count! / PAGINATION.CATEGORY)}
-      />
+      <Pagination current_page={current_page} total_page={Math.ceil(data.count! / PAGINATION.CATEGORY)} />
     </>
   )
 }
