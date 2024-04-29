@@ -7,7 +7,7 @@ import { Button } from '../ui/button'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 
-const ProductCard = ({ product, store_id }: { product: IProductCreate; store_id: string }) => {
+const ProductCard = ({ product, store_id }: { product: Omit<IProductCreate, 'is_display'>; store_id: string }) => {
   const router = useRouter()
   return (
     <Card className="flex p-3 gap-2 ">
