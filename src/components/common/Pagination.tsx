@@ -32,8 +32,8 @@ const Pagination = ({ total_page, current_page }: { total_page: number; current_
           </PaginationItem>
         )}
 
-        {page.map((elem, idx) => (
-          <PaginationItem>
+        {page.map((_, idx) => (
+          <PaginationItem key={idx}>
             <PaginationLink href={`?page=${idx + start_page}`} isActive={current_page === start_page + idx}>
               {start_page + idx}
             </PaginationLink>
