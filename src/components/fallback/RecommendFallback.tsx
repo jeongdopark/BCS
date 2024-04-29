@@ -1,12 +1,6 @@
 'use client'
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselPrevious,
-  CarouselNext,
-} from '../ui/carousel'
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from '../ui/carousel'
 import { Skeleton } from '../ui/skeleton'
 
 const RecommendFallback = () => {
