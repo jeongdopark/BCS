@@ -16,11 +16,7 @@ export default async function Product({ searchParams, params }: { searchParams: 
   )
 
   const dehydrateData = dehydrate(queryClient)
-  await new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(console.log('hello'))
-    }, 2000)
-  })
+
   return (
     <HydrationBoundary state={dehydrateData}>
       <Suspense fallback={<ProductListFallback />}>

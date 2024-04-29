@@ -9,6 +9,7 @@ export default async function Recommend({ params }: { params: { store_id: string
   await queryClient.prefetchQuery(queryOptions.getRecommendProducts(params.store_id))
 
   const dehydrateData = dehydrate(queryClient)
+
   return (
     <HydrationBoundary state={dehydrateData}>
       <Suspense fallback={<RecommendFallback />}>
