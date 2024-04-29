@@ -31,8 +31,10 @@ const ProductTable = ({ current_page, store_id }: { current_page: number; store_
         {data!.length === 0 && <TableCaption>No Result</TableCaption>}
         <TableHeader>
           <TableRow>
-            {HEADER_ELEMENT.map((header) => (
-              <TableHead className="text-center">{header}</TableHead>
+            {HEADER_ELEMENT.map((header, idx) => (
+              <TableHead className="text-center" key={idx}>
+                {header}
+              </TableHead>
             ))}
           </TableRow>
         </TableHeader>

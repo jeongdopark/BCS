@@ -1,16 +1,10 @@
 'use client'
 import ProductCard from './ProductCard'
 import { IProduct } from '@/types/product'
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel'
+import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 import { useRecommendProducts } from '@/hooks/product/useProductService'
 
-const RecommendList = async ({ store_id }: { store_id: string }) => {
+const RecommendList = ({ store_id }: { store_id: string }) => {
   let { data: products } = useRecommendProducts(store_id)
 
   return (
@@ -25,15 +19,8 @@ const RecommendList = async ({ store_id }: { store_id: string }) => {
         >
           <CarouselContent>
             {products?.map((product: IProduct, index) => (
-              <CarouselItem
-                key={product.id}
-                className="md:basis-1/2 lg:basis-1/2"
-              >
-                <ProductCard
-                  product={product}
-                  key={index}
-                  store_id={store_id}
-                />
+              <CarouselItem key={product.id} className="md:basis-1/2 lg:basis-1/2">
+                <ProductCard product={product} key={index} store_id={store_id} />
               </CarouselItem>
             ))}
           </CarouselContent>

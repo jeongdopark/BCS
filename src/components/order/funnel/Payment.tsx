@@ -12,34 +12,25 @@ import { useStoreInfo } from '@/hooks/store/useStoreService'
 const customerKey = 'HWtu1OlOWKvNlyZD2T5sX'
 // const paymentWidget = PaymentWidget(widgetClientKey, PaymentWidget.ANONYMOUS) // 비회원 결제
 
-const Payment = ({
-  setStep,
-  store_id
-}: {
-  setStep: Dispatch<SetStateAction<'takeout' | 'basket' | 'payment'>>
-  store_id: string
-}) => {
+const Payment = ({ setStep, store_id }: { setStep: Dispatch<SetStateAction<'takeout' | 'basket' | 'payment'>>; store_id: string }) => {
   const [paymentWidget, setPaymentWidget] = useState<any>(null)
   const paymentMethodsWidgetRef = useRef<any>(null)
   const price = useOrderStore((state: any) => state.total_amount)
   const { data, isPending } = useStoreInfo(store_id)
-  
+
   useEffect(() => {
-    
     const fetchPaymentWidget = async () => {
       try {
-        const loadedWidget = await loadPaymentWidget(
-          data![0].toss_client_key,
-          customerKey,
-        )
+        const loadedWidget = await loadPaymentWidget(data![0].toss_client_key, customerKey)
         setPaymentWidget(loadedWidget)
       } catch (error) {
         console.error('Error fetching payment widget:', error)
       }
     }
-    if(!isPending){
-    fetchPaymentWidget()
+    if (!isPending) {
+      fetchPaymentWidget()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPending])
 
   useEffect(() => {
@@ -47,15 +38,12 @@ const Payment = ({
       return
     }
 
-    const paymentMethodsWidget = paymentWidget.renderPaymentMethods(
-      '#payment-widget',
-      { value: price },
-      { variantKey: 'DEFAULT' },
-    )
+    const paymentMethodsWidget = paymentWidget.renderPaymentMethods('#payment-widget', { value: price }, { variantKey: 'DEFAULT' })
 
     paymentWidget.renderAgreement('#agreement', { variantKey: 'AGREEMENT' })
 
     paymentMethodsWidgetRef.current = paymentMethodsWidget
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [paymentWidget, price])
 
   useEffect(() => {
@@ -66,6 +54,7 @@ const Payment = ({
     }
 
     paymentMethodsWidget.updateAmount(price)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [price])
 
   const handlePaymentRequest = async () => {
@@ -94,11 +83,7 @@ const Payment = ({
       <div id="agreement" />
       {/* 결제하기 버튼 */}
       <div className="flex justify-center gap-3 w-full ">
-        <Button
-          size="lg"
-          className="w-[100px]"
-          onClick={() => setStep('basket')}
-        >
+        <Button size="lg" className="w-[100px]" onClick={() => setStep('basket')}>
           뒤로가기
         </Button>
         <Button size="lg" className="w-[100px]" onClick={handlePaymentRequest}>
