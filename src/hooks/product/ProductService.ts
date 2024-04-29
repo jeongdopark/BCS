@@ -8,7 +8,7 @@ class ProductService {
   }
 
   async allProducts(store_id: string) {
-    const { data } = await client.from('products').select('*').eq('store', store_id).order('created_at')
+    const { data } = await client.from('products').select('*').eq('store', store_id).order('created_at').eq('is_display', true)
     return data
   }
 
@@ -78,7 +78,9 @@ class ProductService {
       .from('products')
       .select(`id, name, price,image_src, description, tag, options , store,category!inner(*)`)
       .eq('store', store_id)
+      .eq('is_display', true)
       .eq('category.english_name', category)
+
     return products
   }
 }

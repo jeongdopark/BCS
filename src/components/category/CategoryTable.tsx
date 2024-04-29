@@ -42,7 +42,7 @@ const CategoryTable = ({ current_page, store_id }: { current_page: number; store
                       setOpen={setIsUpdateModalOpen}
                       title="수정"
                       trigger={
-                        <Button size="lg" onClick={() => setSelectedId(category.id)}>
+                        <Button size="sm" onClick={() => setSelectedId(category.id)}>
                           수정
                         </Button>
                       }
@@ -55,7 +55,7 @@ const CategoryTable = ({ current_page, store_id }: { current_page: number; store
                       setOpen={setIsDeleteModalOpen}
                       title="삭제"
                       trigger={
-                        <Button size="lg" onClick={() => setSelectedId(category.id)}>
+                        <Button size="sm" onClick={() => setSelectedId(category.id)}>
                           삭제
                         </Button>
                       }

@@ -12,7 +12,6 @@ export async function middleware(req: NextRequest) {
   const {
     data: { session },
   } = await supabase.auth.getSession()
-  console.log(req.nextUrl.pathname, !!session, user)
   if (session && user?.value) {
     if (req.nextUrl.pathname === '/signin' || req.nextUrl.pathname === '/') {
       return NextResponse.redirect(new URL('/store-management', req.url))
