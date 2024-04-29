@@ -1,7 +1,7 @@
 'use client'
 import { Dispatch, SetStateAction } from 'react'
 import React, { useEffect, useRef, useState } from 'react'
-import { loadPaymentWidget } from '@tosspayments/payment-widget-sdk'
+import { loadPaymentWidget, ANONYMOUS } from '@tosspayments/payment-widget-sdk'
 import { nanoid } from 'nanoid'
 import { Button } from '@/components/ui/button'
 import { useOrderStore } from '@/stores/order'
@@ -9,7 +9,7 @@ import Header from './Header'
 import { useStoreInfo } from '@/hooks/store/useStoreService'
 // 구매자의 고유 아이디를 불러와서 customerKey로 설정하세요.
 // 이메일・전화번호와 같이 유추가 가능한 값은 안전하지 않습니다
-const customerKey = 'HWtu1OlOWKvNlyZD2T5sX'
+const customerKey = 'piTwKtOCPusJKpaifhdhP'
 // const paymentWidget = PaymentWidget(widgetClientKey, PaymentWidget.ANONYMOUS) // 비회원 결제
 
 const Payment = ({ setStep, store_id }: { setStep: Dispatch<SetStateAction<'takeout' | 'basket' | 'payment'>>; store_id: string }) => {
@@ -21,7 +21,7 @@ const Payment = ({ setStep, store_id }: { setStep: Dispatch<SetStateAction<'take
   useEffect(() => {
     const fetchPaymentWidget = async () => {
       try {
-        const loadedWidget = await loadPaymentWidget(data![0].toss_client_key, customerKey)
+        const loadedWidget = await loadPaymentWidget('test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm', 'eXDGzTxA3RX53myM_4MRB')
         setPaymentWidget(loadedWidget)
       } catch (error) {
         console.error('Error fetching payment widget:', error)
