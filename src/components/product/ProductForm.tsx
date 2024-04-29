@@ -3,22 +3,9 @@ import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { Button } from '@/components/ui/button'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import Image from 'next/image'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useCategories } from '@/hooks/category/useCategoryService'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react'
@@ -76,9 +63,7 @@ const ProductForm = ({
   // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof formSchema>) {
     const createProductHandler = async () => {
-      const { data, error } = await client.storage
-        .from('BCS')
-        .upload(`${store_id}/${image?.name}`, image!)
+      const { data, error } = await client.storage.from('BCS').upload(`${store_id}/${image?.name}`, image!)
 
       if (data) {
         createProduct.mutate(
@@ -90,6 +75,8 @@ const ProductForm = ({
             category: values.category,
             store: store_id,
             tag: 'recommend',
+            is_display: true,
+            is_sold_out: false,
           },
           {
             onSuccess: () => {
@@ -134,10 +121,7 @@ const ProductForm = ({
             render={({ field }) => (
               <FormItem>
                 <FormLabel>카테고리</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
+                <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="카테고리를 선택해 주세요." />
@@ -202,11 +186,7 @@ const ProductForm = ({
                       }}
                       className="w-[50%]"
                     />
-                    <picture className="w-[150px] h-[150px] relative ">
-                      {preview && (
-                        <Image src={preview} alt="product image" fill />
-                      )}
-                    </picture>
+                    <picture className="w-[150px] h-[150px] relative ">{preview && <Image src={preview} alt="product image" fill />}</picture>
                   </div>
                 </FormControl>
 
