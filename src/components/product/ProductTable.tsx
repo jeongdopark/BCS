@@ -23,7 +23,7 @@ const ProductTable = ({ current_page, store_id }: { current_page: number; store_
   const deleteProduct = useProductDelete()
   const updateProductSoldOut = useUpdateProductSoldOut()
   const updateProductDisplay = useUpdateProductDisplay()
-  const HEADER_ELEMENT = ['이미지', '상품명', '카테고리', '가격', '설명', '품절', '숨기기', '']
+  const HEADER_ELEMENT = ['이미지', '상품명', '카테고리', '가격', '설명', '품절', '판매', '']
   if (data === undefined) return <div>Loading...</div>
   return (
     <div className="flex flex-col gap-3">
