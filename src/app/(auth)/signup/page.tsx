@@ -5,31 +5,16 @@ import { Button } from '@/components/ui/button'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form'
-import { signUpNewUser } from '@/actions/auth'
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
 import Link from 'next/link'
 import Toast from '@/components/common/Toast'
 import { useRouter } from 'next/navigation'
 
 const formSchema = z
   .object({
-    email: z
-      .string()
-      .min(1, { message: 'Email is required' })
-      .email('Invalid email address'),
-    password: z
-      .string()
-      .min(6, { message: 'Password must be at least 6 characters' }),
-    confirmPassword: z
-      .string()
-      .min(6, { message: 'Password must be at least 6 characters' }),
+    email: z.string().min(1, { message: 'Email is required' }).email('Invalid email address'),
+    password: z.string().min(6, { message: 'Password must be at least 6 characters' }),
+    confirmPassword: z.string().min(6, { message: 'Password must be at least 6 characters' }),
   })
   .refine((data) => data.password === data.confirmPassword, {
     path: ['confirmPassword'],
@@ -49,25 +34,30 @@ export default function Signup() {
 
   // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    const { data, error } = await signUpNewUser({
-      email: values.email,
-      password: values.password,
-    })
+    // const { data, error } = await signUpNewUser({
+    //   email: values.email,
+    //   password: values.password,
+    // })
 
-    if (error) {
-      Toast({
-        title: '회원가입 실패',
-        description: error,
-        mode: 'fail',
-      })
-    } else {
-      Toast({
-        title: '회원가입',
-        description: '회뤈가입 완료 !',
-        mode: 'success',
-      })
-      router.push('/signin')
-    }
+    // if (error) {
+    //   Toast({
+    //     title: '회원가입 실패',
+    //     description: error,
+    //     mode: 'fail',
+    //   })
+    // } else {
+    //   Toast({
+    //     title: '회원가입',
+    //     description: '회뤈가입 완료 !',
+    //     mode: 'success',
+    //   })
+    //   router.push('/signin')
+    // }
+    Toast({
+      title: '회원가입',
+      description: '회뤈가입은 제한됩니다.',
+      mode: 'fail',
+    })
   }
   return (
     <div className="w-[60%] p-2">
@@ -94,11 +84,7 @@ export default function Signup() {
               <FormItem>
                 <FormLabel>비밀번호</FormLabel>
                 <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="비밀번호를 입력해 주세요."
-                    {...field}
-                  />
+                  <Input type="password" placeholder="비밀번호를 입력해 주세요." {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -111,11 +97,7 @@ export default function Signup() {
               <FormItem>
                 <FormLabel>비밀번호 확인</FormLabel>
                 <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="비밀번호 확인"
-                    {...field}
-                  />
+                  <Input type="password" placeholder="비밀번호 확인" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
