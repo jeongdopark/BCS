@@ -3,7 +3,7 @@ import { client } from '@/utils/supabase'
 
 class CategoryService {
   async getCategories(store_id: string): Promise<ICategory[] | null> {
-    const { data, error } = await client.from('categories').select().eq('store', store_id)
+    const { data, error } = await client.from('categories').select('id, name, english_name').eq('store', store_id)
 
     if (error) {
       console.error('Error fetching categories:', error)

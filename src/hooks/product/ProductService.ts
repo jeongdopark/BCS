@@ -43,7 +43,7 @@ class ProductService {
           id: string
           description: string
           image_src: string
-          category: ICategory
+          category: any
           price: number
           is_display: boolean
           is_sold_out: boolean
@@ -53,13 +53,13 @@ class ProductService {
   }> {
     let { data, count } = await client
       .from('products')
-      .select('*, category(name)', {
+      .select('id, name, price, image_src, description, is_sold_out, is_display, category(name)', {
         count: 'exact',
       })
       .eq('store', store_id)
       .order('created_at')
       .range(start, end)
-
+    console.log(data, count)
     return { data, count }
   }
 
