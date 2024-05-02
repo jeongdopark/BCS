@@ -2,12 +2,18 @@
 
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { IProductCreate } from '@/types/product'
+import { IProduct } from '@/types/product'
 import { Button } from '../ui/button'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 
-const ProductCard = ({ product, store_id }: { product: Omit<IProductCreate, 'is_display'>; store_id: string }) => {
+const ProductCard = ({
+  product,
+  store_id,
+}: {
+  product: Pick<IProduct, 'id' | 'name' | 'price' | 'image_src' | 'description' | 'is_sold_out' | 'is_display'>
+  store_id: string
+}) => {
   const router = useRouter()
   return (
     <Card className="flex p-3 gap-2 ">

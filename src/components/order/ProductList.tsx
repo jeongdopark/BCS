@@ -1,7 +1,7 @@
 'use client'
 
 import ProductCard from './ProductCard'
-import { IProduct, IProductCreate } from '@/types/product'
+import { IProduct } from '@/types/product'
 import { useAllProduct, useFilterByCategory } from '@/hooks/product/useProductService'
 
 const ProductList = ({ category, store_id }: { category: string; store_id: string }) => {
@@ -12,10 +12,10 @@ const ProductList = ({ category, store_id }: { category: string; store_id: strin
       <strong>{category}</strong>
       <div className="grid grid-cols-2 gap-10 ">
         {category
-          ? filterdProducts?.map((product: Omit<IProductCreate, 'is_display'>) => {
+          ? filterdProducts?.map((product: Pick<IProduct, 'id' | 'name' | 'price' | 'image_src' | 'description' | 'is_sold_out' | 'is_display'>) => {
               return <ProductCard product={product} key={product.name} store_id={store_id} />
             })
-          : allProducts?.map((product: IProduct) => {
+          : allProducts?.map((product: Pick<IProduct, 'id' | 'name' | 'price' | 'image_src' | 'description' | 'is_sold_out' | 'is_display'>) => {
               return <ProductCard product={product} key={product.name} store_id={store_id} />
             })}
       </div>

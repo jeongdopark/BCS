@@ -18,7 +18,7 @@ const RecommendList = ({ store_id }: { store_id: string }) => {
           className="w-full"
         >
           <CarouselContent>
-            {products?.map((product: IProduct, index) => (
+            {products?.map((product: Pick<IProduct, 'id' | 'name' | 'price' | 'image_src' | 'description' | 'is_sold_out' | 'is_display'>, index) => (
               <CarouselItem key={product.id} className="md:basis-1/2 lg:basis-1/2">
                 <ProductCard product={product} key={index} store_id={store_id} />
               </CarouselItem>
