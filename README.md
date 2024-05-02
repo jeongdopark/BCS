@@ -14,6 +14,21 @@
 
 상품 판매 내역을 확인할 수 있습니다.
 
+### 주문 페이지
+
+<div style="display : flex; gap:10px;">
+  <img width="400" alt="CleanShot 2024-05-01 at 02 06 25@2x" src="https://github.com/jeongdopark/BCS/assets/72500346/32013fe6-61d6-4b12-a48c-81e4796e5b63"/>
+  <img width="400" alt="CleanShot 2024-05-02 at 20 38 11@2x" src="https://github.com/jeongdopark/BCS/assets/72500346/4a0c9f90-6599-4ebe-aac6-b7f2edab1ed8"/>
+</div>
+
+### 상품 관리
+
+<img width="400" alt="CleanShot 2024-05-02 at 20 38 11@2x" src="https://github.com/jeongdopark/BCS/assets/72500346/dbc3e97a-ae26-4b44-9482-36b69e294c1d">
+
+### 주문 현황
+
+<img width="400" alt="CleanShot 2024-05-02 at 20 38 11@2x" src="https://github.com/jeongdopark/BCS/assets/72500346/7c1bc20c-970e-4e50-970d-81b4b55384ce">
+
 <br/>
 
 ## 기술 스택
