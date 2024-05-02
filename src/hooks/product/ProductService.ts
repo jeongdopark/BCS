@@ -8,7 +8,12 @@ class ProductService {
   }
 
   async allProducts(store_id: string) {
-    const { data } = await client.from('products').select('*').eq('store', store_id).order('created_at').eq('is_display', true)
+    const { data } = await client
+      .from('products')
+      .select('id, name, price, image_src, description, is_sold_out, is_display')
+      .eq('store', store_id)
+      .order('created_at')
+      .eq('is_display', true)
     return data
   }
 
@@ -69,7 +74,12 @@ class ProductService {
   }
 
   async getRecommendProduct(store_id: string) {
-    let { data: products } = await client.from('products').select('*').eq('store', store_id).eq('tag', 'recommend').order('created_at')
+    let { data: products } = await client
+      .from('products')
+      .select('id, name, price, image_src, description, is_sold_out, is_display')
+      .eq('store', store_id)
+      .eq('tag', 'recommend')
+      .order('created_at')
     return products
   }
 

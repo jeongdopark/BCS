@@ -22,7 +22,7 @@ class CategoryService {
     end: number
     store_id: string
   }): Promise<{ data: { name: string; id: number }[]; count: number | null }> {
-    const { data, error, count } = await client.from('categories').select('id, name', { count: 'exact' }).eq('store', store_id).range(start, end)
+    const { data, error, count } = await client.from('categories').select('*', { count: 'exact' }).eq('store', store_id).range(start, end)
     if (error) {
       throw console.error('Error fetching categories:', error)
     }
