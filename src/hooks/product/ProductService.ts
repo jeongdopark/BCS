@@ -86,11 +86,11 @@ class ProductService {
   async getFilterByCategory({ category, store_id }: { category: string; store_id: string }) {
     let { data: products } = await client
       .from('products')
-      .select('id, name, price, image_src, description, is_sold_out, is_display')
+      .select(`id, name, price,image_src, description, tag, options, is_sold_out, category!inner(*)`)
       .eq('store', store_id)
       .eq('is_display', true)
       .eq('category.english_name', category)
-
+    console.log(products, category, store_id)
     return products
   }
 }
